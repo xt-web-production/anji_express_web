@@ -1,0 +1,139 @@
+@primary-color: #2d8cf0; //#2d8cf0;#2891e2
+@info-color: #2d8cf0;
+@success-color: #19be6b;
+@warning-color: #ff9900;
+@error-color: #ed3f14;
+@link-color: @primary-color;
+@link-hover-color: tint(@link-color, 60%);
+@link-active-color: shade(@link-color, 10%);
+@tooltip-color: #fff;
+@subsidiary-color: #80848f;
+@rate-star-color: #f5a623; // Base
+@body-background: #fff;
+@font-family: "Microsoft YaHei","微软雅黑",Arial,"Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB",sans-serif;
+@code-family: Consolas,Menlo,Courier,monospace;
+@title-color: #1c2438;
+@text-color: #333333;
+@font-size-base: 16px;
+@font-size-small: 14px;
+@cursor-disabled: not-allowed;
+@box-shadow-color: #333333;
+
+@xt-border-color: #ccc;
+@bg-color: #fff;
+@max-width: 1366px;
+@base-width: 1200px;
+
+
+a,
+abbr,
+acronym,
+address,
+applet,
+article,
+aside,
+audio,
+b,
+big,
+blockquote,
+body,
+canvas,
+caption,
+center,
+cite,
+code,
+dd,
+del,
+details,
+dfn,
+div,
+dl,
+dt,
+em,
+embed,
+fieldset,
+figcaption,
+figure,
+footer,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+html,
+i,
+iframe,
+img,
+input,
+ins,
+kbd,
+label,
+legend,
+li,
+mark,
+menu,
+nav,
+object,
+ol,
+output,
+p,
+pre,
+q,
+ruby,
+s,
+samp,
+section,
+small,
+span,
+strike,
+strong,
+sub,
+summary,
+sup,
+table,
+tbody,
+td,
+tfoot,
+th,
+thead,
+time,
+tr,
+tt,
+u,
+ul,
+var,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+table {
+  width: 100%;
+}
+
+body {
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  background-color: fade(@primary-color, 10%) !important;
+  //user-select: none;
+  & > .ivu-poptip-popper > .ivu-poptip-content > .ivu-poptip-inner > .ivu-poptip-body > .ivu-icon-help-circled {
+    color: @warning-color;
+  }
+  & > .ivu-poptip-popper > .ivu-poptip-content > .ivu-poptip-inner > .ivu-poptip-body > .ivu-poptip-body-message {
+    display: inline;
+  }
+  & > .ivu-poptip-popper > .ivu-poptip-content > .ivu-poptip-inner > .ivu-poptip-footer {
+    text-align: right;
+    padding: 8px 12px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
