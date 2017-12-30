@@ -7,6 +7,7 @@ import '~/animate.css/animate.min.css'
 import './style/style.less'
 
 Vue.config.productionTip = false
+Vue.prototype.$Host = 'http://127.0.0.1:8009/'
 
 /* eslint-disable no-new */
 new Vue({
