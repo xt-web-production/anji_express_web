@@ -1,9 +1,9 @@
 <template>
   <div class="mobile">
     <h1>mobile</h1>
-    <button @click='sendGift(1)'>赠送礼物1</button>
-    <button @click='sendGift(2)'>赠送礼物2</button>
-    <button @click='sendGift(3)'>赠送礼物3</button>
+    <button @click="sendGift('name1', 'http://1jad.ad1/ads/113.png', 1)">赠送礼物1</button>
+    <button @click="sendGift('name2', 'http://1123adad/qwert.png', 2)">赠送礼物2</button>
+    <button @click="sendGift('name3', 'http://1ggg123/adad13.png', 3)">赠送礼物3</button>
 
     <button @click='queryAllGift'>查询所有赠送礼物</button>
 
@@ -22,11 +22,12 @@ export default {
     }
   },
   methods: {
-    sendGift(gift){
-      console.log(this.$Host);
+    sendGift(wcname, img, gift){
       axios.post(`${this.$Host}sendGift1`, {
-          gift
-        })
+        wcname,
+        img,
+        gift
+      })
     },
     queryAllGift(){
       axios.post(`${this.$Host}quertGift1`)
