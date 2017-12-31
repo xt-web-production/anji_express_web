@@ -1,39 +1,70 @@
 <template>
   <div class="mobile">
-    <h1>mobile</h1>
-    <button @click="sendGift('name1', 'http://1jad.ad1/ads/113.png', 1)">赠送礼物1</button>
-    <button @click="sendGift('name2', 'http://1123adad/qwert.png', 2)">赠送礼物2</button>
-    <button @click="sendGift('name3', 'http://1ggg123/adad13.png', 3)">赠送礼物3</button>
-
-    <button @click='queryAllGift'>查询所有赠送礼物</button>
+    <h1>mobile {{itemNames[itemType.itemType - 1]}}</h1>
+    <button @click="sendGift(1)">赠送礼物1</button>
+    <button @click="sendGift(2)">赠送礼物2</button>
+    <button @click="sendGift(3)">赠送礼物3</button>
 
     <input placeholder="请输入内容" v-model='msg'>
     <button @click='submitText(msg)'>发送祝福语</button>
+
+
+    <button @click='handleClickPraise'>点赞</button>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import faker from 'faker';
+import {mapState} from 'vuex';
 export default {
-  name: 'HelloWorld',
+  name: 'mobile',
+  beforeRouteEnter (to, from, next) {
+    next(vm => vm.setData())
+  },
   data () {
     return {
-      msg: ''
+      itemNames: ['节目1', '节目2', '节目3', '节目4', '节目5', '节目6', '节目7', '节目8'],
+      name: '',
+      img: '',
+      msg: '',
+      //根据类型搜索礼物
+      queryGiftItem : {
+        itemtype: this.itemtype,
+        page: 0,
+        pagesize: 4
+      }
     }
   },
+  computed: {
+  ...mapState(['itemType'])
+  },
   methods: {
-    sendGift(wcname, img, gift){
-      axios.post(`${this.$Host}sendGift1`, {
-        wcname,
-        img,
+    setData () {
+      this.name = faker.name.findName()
+      this.img = faker.image.imageUrl()
+    },
+    /**
+    发送礼物
+    **/
+    sendGift(gift){
+      axios.post(`${this.$Host}/sendGift`, {
+        name: this.name,
+        itemtype: this.itemType.itemType,
+        img: this.img,
         gift
       })
     },
-    queryAllGift(){
-      axios.post(`${this.$Host}quertGift1`)
+    submitText(text){
+      axios.post(`${this.$Host}/addText`, {
+        name: this.name,
+        itemtype: this.itemType.itemType,
+        img: this.img,
+        text
+      })
     },
-    submitText(val){
-      console.log(val);
+    handleClickPraise(){
+      axios.post(`${this.$Host}/addPraise`, {itemtype: this.itemType.itemType})
     }
   }
 }

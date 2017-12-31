@@ -5,21 +5,29 @@
 </template>
 
 <script>
+import axios from 'axios';
 import io from 'socket.io-client';
+import {mapActions} from 'vuex'
 export default {
   name: 'app',
-
   created() {
-    const socket = io('http://192.168.0.2:8009');
-    socket.on('connect', function() {
-      console.log('this is connect')
+    //初始化 当前节目
+    this.initGetCurrentItemType()
+    const socket = io(this.$Host);
+    const that = this
+    socket.on('screen', function(val) {
+      console.log(val);
+      that.update_item_type(val.id)
     })
-    socket.on('screen', function(data) {
-      console.log('this is screen', data)
-    })
-    socket.on('disconnect', function() {
-      console.log('this is disconnect')
-    })
+  },
+  methods: {
+    ...mapActions(['update_item_type']),
+    initGetCurrentItemType(){
+      axios.post(`${this.$Host}/queryCurrentItemType`).then(res=> {
+        const currentItemType = res.data.data.currentItemType
+        this.update_item_type(currentItemType)
+      })
+    }
   }
 }
 </script>
@@ -30,7 +38,5 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

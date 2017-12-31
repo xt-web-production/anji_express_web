@@ -3,16 +3,18 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './vuex/store'
 import '~/animate.css/animate.min.css'
 import './style/style.less'
 
 Vue.config.productionTip = false
-Vue.prototype.$Host = 'http://127.0.0.1:8009/'
+Vue.prototype.$Host = 'http://127.0.0.1:8009'
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

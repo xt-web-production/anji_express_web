@@ -14,7 +14,6 @@
 
 <script>
 import axios from 'axios';
-import io from 'socket.io-client';
 export default {
   name: 'HelloWorld',
   data () {
@@ -24,15 +23,9 @@ export default {
   },
   methods: {
   handleChangeScreen(id) {
-    axios.post('http://192.168.0.2:8009/changeScreen', {
+    axios.post(`${this.$Host}/changeScreen`, {
         id
       })
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
   }
 }
 }
