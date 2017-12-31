@@ -9,6 +9,8 @@
   <button @click="handleChangeScreen(6)">screen6</button>
   <button @click="handleChangeScreen(7)">screen7</button>
   <button @click="handleChangeScreen(8)">screen8</button>
+  <button @click="handleStartShow">开始直播</button>
+  <button @click="handleStopShow">停止直播</button>
   </div>
 </template>
 
@@ -22,10 +24,19 @@ export default {
     }
   },
   methods: {
+    //切换场景
   handleChangeScreen(id) {
     axios.post(`${this.$Host}/changeScreen`, {
         id
       })
+  },
+  //开始直播
+  handleStartShow(){
+    axios.post(`${this.$Host}/startShow`)
+  },
+  //开始直播
+  handleStopShow(){
+    axios.post(`${this.$Host}/stopShow`)
   }
 }
 }
