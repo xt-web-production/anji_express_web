@@ -15,8 +15,11 @@ export default {
     this.initGetCurrentItemType()
     const socket = io(this.$Host);
     const that = this
+    socket.on('connect', function(val) {
+      if ( that.$route.name != 'bigscreen') return
+      socket.emit('storeBigScreenId', { customId:"000CustomIdHere0000" });
+    })
     socket.on('screen', function(val) {
-      console.log(val);
       that.update_item_type(val.id)
     })
   },
