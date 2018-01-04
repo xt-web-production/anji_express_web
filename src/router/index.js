@@ -1,27 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import mobile from '@/pages/mobile'
-import bigscreen from '@/pages/bigScreen'
-import control from '@/pages/control'
+import showenter from '@/pages/showenter'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
+      path: '/',
+      name: 'mobile',
+      component: showenter
+    },
+    {
       path: '/mobile',
       name: 'mobile',
       component: mobile
-    },
-    {
-      path: '/bigscreen',
-      name: 'bigscreen',
-      component: bigscreen
-    },
-    {
-      path: '/control',
-      name: 'control',
-      component: control
     }
   ]
 })

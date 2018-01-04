@@ -1,6 +1,6 @@
 <template>
   <div class="mobile">
-    <h1>mobile {{itemNames[itemType.itemType - 1]}}</h1>
+    <h1>mobile {{itemNames[userInfo.itemType - 1]}}</h1>
     <button @click="sendGift(1)">赠送礼物1</button>
     <button @click="sendGift(2)">赠送礼物2</button>
     <button @click="sendGift(3)">赠送礼物3</button>
@@ -14,57 +14,43 @@
 </template>
 
 <script>
-import axios from 'axios';
+import {axiosPost} from '@/lib/ajax.js';
 import faker from 'faker';
 import {mapState} from 'vuex';
 export default {
   name: 'mobile',
-  beforeRouteEnter (to, from, next) {
-    next(vm => vm.setData())
-  },
   data () {
     return {
       itemNames: ['节目1', '节目2', '节目3', '节目4', '节目5', '节目6', '节目7', '节目8'],
       name: '',
       img: '',
-      msg: '',
-      //根据类型搜索礼物
-      queryGiftItem : {
-        itemtype: this.itemtype,
-        page: 0,
-        pagesize: 4
-      }
+      msg: ''
     }
   },
   computed: {
-  ...mapState(['itemType'])
+  ...mapState(['userInfo']),
+  wcUser(){
+    return this.userInfo.userInfo
+  }
   },
   methods: {
-    setData () {
-      this.name = faker.name.findName()
-      this.img = faker.image.imageUrl()
-    },
     /**
     发送礼物
     **/
     sendGift(gift){
-      axios.post(`${this.$Host}/sendGift`, {
-        name: this.name,
-        itemtype: this.itemType.itemType,
-        img: this.img,
-        gift
-      })
+      axiosPost(`${this.$Host}/sendGift`, Object.assign({itemtype: this.userInfo.itemType, gift}, this.wcUser))
     },
+    /**
+    发送祝福语
+    **/
     submitText(text){
-      axios.post(`${this.$Host}/addText`, {
-        name: this.name,
-        itemtype: this.itemType.itemType,
-        img: this.img,
-        text
-      })
+      axiosPost(`${this.$Host}/addText`, Object.assign({itemtype: this.userInfo.itemType, text}, this.wcUser))
     },
+    /**
+    点赞
+    **/
     handleClickPraise(){
-      axios.post(`${this.$Host}/addPraise`, {itemtype: this.itemType.itemType})
+      axiosPost(`${this.$Host}/addPraise`, {itemtype: this.userInfo.itemType})
     }
   }
 }

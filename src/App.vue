@@ -7,6 +7,7 @@
 <script>
 import axios from 'axios';
 import io from 'socket.io-client';
+import faker from 'faker';
 import {mapActions} from 'vuex'
 export default {
   name: 'app',
@@ -15,16 +16,20 @@ export default {
     this.initGetCurrentItemType()
     const socket = io(this.$Host);
     const that = this
-    socket.on('connect', function(val) {
-      if ( that.$route.name != 'bigscreen') return
-      socket.emit('storeBigScreenId', { customId:"000CustomIdHere0000" });
-    })
     socket.on('screen', function(val) {
       that.update_item_type(val.id)
     })
+    this.getWchartUserInfo()
   },
   methods: {
-    ...mapActions(['update_item_type']),
+    ...mapActions(['update_item_type', 'update_user_info']),
+    //获取微信用户信息（头像、图片）
+    getWchartUserInfo(){
+      this.update_user_info({
+        name: faker.name.findName(),
+        img: faker.image.imageUrl()
+      })
+    },
     initGetCurrentItemType(){
       axios.post(`${this.$Host}/queryCurrentItemType`).then(res=> {
         const currentItemType = res.data.data.currentItemType
@@ -41,5 +46,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  max-width: 100%;
 }
 </style>

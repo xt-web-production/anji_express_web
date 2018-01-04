@@ -6,8 +6,8 @@
 //   modules[key.replace(/(\.\/|\.js)/g, '')] = files(key).default
 // })
 
-import itemType from './itemType';
+import userInfo from './userInfo';
 const modules = {
-  itemType
+  userInfo
 }
 export default modules
