@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import mobile from '@/pages/mobile'
 import showenter from '@/pages/showenter'
+import ticket from '@/pages/ticket'
 
 Vue.use(Router)
 
@@ -16,6 +17,11 @@ export default new Router({
       path: '/mobile',
       name: 'mobile',
       component: mobile
+    },
+    {
+      path: '/ticket',
+      name: 'ticket',
+      component: ticket
     }
   ]
 })

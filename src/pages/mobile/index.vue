@@ -8,7 +8,7 @@
     <input placeholder="请输入内容" v-model='msg'>
     <button @click='submitText(msg)'>发送祝福语</button>
 
-
+    <button @click='handleClickTicket'>开始投票</button>
     <button @click='handleClickPraise'>点赞</button>
   </div>
 </template>
@@ -51,6 +51,20 @@ export default {
     **/
     handleClickPraise(){
       axiosPost(`${this.$Host}/addPraise`, {itemtype: this.userInfo.itemType})
+    },
+    /**
+    开始投票
+    **/
+    handleClickTicket(){
+      axiosPost(`${this.$Host}/searchIsTicket`).then(res=> {
+        if (res.data.allowTicket) {
+          this.$router.push('ticket')
+          return
+        }
+        throw res
+      }).catch(res=>{
+        this.$MessageBox('提示:', '投票未开始');
+      })
     }
   }
 }
