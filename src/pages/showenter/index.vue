@@ -1,7 +1,7 @@
 <template>
-  <div class="control">
-    <div class="burron-wrapper">
-      <p class='button animated bounceInUp' @click="handleClickEnterShow" v-if='this.wcUser.img'>登录到直播间</p>
+  <div :class="$style.control" :style="'background-position: center; background-image: url(' + require('./bg.jpg') + ');'">
+    <div :class="$style['burron-wrapper']">
+      <p :class='$style.button' class='button animated bounceInUp' @click="handleClickEnterShow" v-if='this.wcUser.img'>登录到直播间</p>
     </div>
   </div>
 </template>
@@ -27,7 +27,6 @@ export default {
       axiosPost(`${this.$Host}/enterShow`, this.wcUser).then((res)=> {
         this.$router.push('mobile')
       }).catch(err=>{
-        console.log(err);
         this.$MessageBox('提示:', '表演还没开始,请稍等！');
       })
     }
@@ -36,15 +35,14 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang='less' scoped>
+<style lang='less' module>
 @import "../../style/mystyle.less";
   .control {
     position: relative;
     height: 100vh;
     width: 100vw;
-    background-image: url('./bg.jpg');
+    overflow: hidden;
     background-repeat: no-repeat;
-    background-position: center;
     background-size: cover;
   }
   .burron-wrapper {

@@ -13,7 +13,7 @@ import {getParam} from '@/lib/factory'
 export default {
   name: 'app',
   created() {
-    axios.post(`${this.$Host}/queryCurrentItemType`, getParam(window.location.href, 'code')).then(res=>{
+    axios.post(`${this.$Host}/getToken`, {code: getParam(window.location.href, 'code')}).then(res=>{
       console.log(res);
     })
     //初始化 当前节目
