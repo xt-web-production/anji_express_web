@@ -9,9 +9,13 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import faker from 'faker';
 import {mapActions} from 'vuex'
+import {getParam} from '@/lib/factory'
 export default {
   name: 'app',
   created() {
+    axios.post(`${this.$Host}/queryCurrentItemType`, getParam(window.location.href, 'code')).then(res=>{
+      console.log(res);
+    })
     //初始化 当前节目
     this.initGetCurrentItemType()
     const socket = io(this.$Host);
@@ -27,7 +31,8 @@ export default {
     getWchartUserInfo(){
       this.update_user_info({
         name: faker.name.findName(),
-        img: faker.image.imageUrl()
+        img: faker.image.imageUrl(),
+        openId: '001001000111'
       })
     },
     initGetCurrentItemType(){

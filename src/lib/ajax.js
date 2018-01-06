@@ -1,5 +1,5 @@
 import axios from 'axios';
-export const axiosPost = (url, params={}) => {
+export const axiosPost = (url, params = {}) => {
   return axios.post(url, params).then((response)=> {
     const res = response.data;
     if (res.code == '-1') {
