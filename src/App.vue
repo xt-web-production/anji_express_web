@@ -15,6 +15,8 @@ export default {
   created() {
     axios.post(`${this.$Host}/getToken`, {code: getParam(window.location.href, 'code')}).then(res=>{
       console.log(res);
+    }).catch(err=>{
+      console.log(err);
     })
     //初始化 当前节目
     this.initGetCurrentItemType()
