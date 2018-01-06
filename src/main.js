@@ -12,7 +12,7 @@ import 'mint-ui/lib/style.css'
 // Vue.component(MessageBox.name, MessageBox);
 Vue.prototype.$MessageBox = MessageBox
 Vue.config.productionTip = false
-Vue.prototype.$Host = 'http://127.0.0.1:8009'
+Vue.prototype.$Host = 'http://106.14.144.162'
 
 /* eslint-disable no-new */
 new Vue({
