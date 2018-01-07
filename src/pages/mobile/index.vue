@@ -1,89 +1,46 @@
 <template>
-  <div class="mobile">
-    <h1>mobile {{itemNames[userInfo.itemType - 1]}}</h1>
-    <button @click="sendGift(1)">赠送礼物1</button>
-    <button @click="sendGift(2)">赠送礼物2</button>
-    <button @click="sendGift(3)">赠送礼物3</button>
-
-    <input placeholder="请输入内容" v-model='msg'>
-    <button @click='submitText(msg)'>发送祝福语</button>
-
-    <button @click='handleClickTicket'>开始投票</button>
-    <button @click='handleClickPraise'>点赞</button>
-  </div>
+<div class='mobile-contenter'>
+  <router-view/>
+</div>
 </template>
 
 <script>
-import {axiosPost} from '@/lib/ajax.js';
+import axios from 'axios';
 import faker from 'faker';
-import {mapState} from 'vuex';
+import {mapActions} from 'vuex'
+import {getParam} from '@/lib/factory'
+import storagejs from '@/lib/storagejs'
 export default {
-  name: 'mobile',
-  data () {
-    return {
-      itemNames: ['节目1', '节目2', '节目3', '节目4', '节目5', '节目6', '节目7', '节目8'],
-      name: '',
-      img: '',
-      msg: ''
+  name: 'mobile-contenter',
+  created() {
+    const anjiUserInfo = storagejs.set('anjiUserInfo')
+    if (anjiUserInfo) {
+      this.update_user_info(anjiUserInfo)
+      return
     }
-  },
-  computed: {
-  ...mapState(['userInfo']),
-  wcUser(){
-    return this.userInfo.userInfo
-  }
+    const that = this
+    axios.post(`${this.$Host}/getToken`, {code: getParam(window.location.href, 'code')}).then(res=>{
+      const userInfo = JSON.parse(res.data.data)
+      that.getWchartUserInfo(userInfo)
+    }).catch(err=>{
+      console.log(err);
+    })
   },
   methods: {
-    /**
-    发送礼物
-    **/
-    sendGift(gift){
-      axiosPost(`${this.$Host}/sendGift`, Object.assign({itemtype: this.userInfo.itemType, gift}, this.wcUser))
-    },
-    /**
-    发送祝福语
-    **/
-    submitText(text){
-      axiosPost(`${this.$Host}/addText`, Object.assign({itemtype: this.userInfo.itemType, text}, this.wcUser))
-    },
-    /**
-    点赞
-    **/
-    handleClickPraise(){
-      axiosPost(`${this.$Host}/addPraise`, {itemtype: this.userInfo.itemType})
-    },
-    /**
-    开始投票
-    **/
-    handleClickTicket(){
-      axiosPost(`${this.$Host}/searchIsTicket`).then(res=> {
-        if (res.data.allowTicket) {
-          this.$router.push('ticket')
-          return
-        }
-        throw res
-      }).catch(res=>{
-        this.$MessageBox('提示:', '投票未开始');
-      })
+    ...mapActions(['update_user_info']),
+    //获取微信用户信息（头像、图片）
+    getWchartUserInfo(item){
+      const name = item.nickname
+      const headimgurl = item.headimgurl
+      const openid = item.openid
+      const userInfo = {
+        name: item.nickname || faker.name.findName(),
+        img: item.headimgurl ? item.headimgurl.replace(/[\\]/g,'') : faker.image.imageUrl(),
+        openId: item.openid || `test${Math.random() * 100}`
+      }
+      storagejs.set('anjiUserInfo', userInfo)
+      this.update_user_info(userInfo)
     }
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>

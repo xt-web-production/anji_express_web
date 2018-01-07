@@ -25,6 +25,10 @@ export default {
   methods: {
     handleClickEnterShow(){
       axiosPost(`${this.$Host}/enterShow`, this.wcUser).then((res)=> {
+        console.log(res);
+        if (res.code == -1) {
+          throw res
+        }
         this.$router.push('mobile')
       }).catch(err=>{
         this.$MessageBox('提示:', '表演还没开始,请稍等！');
