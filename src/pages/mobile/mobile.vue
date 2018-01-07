@@ -14,15 +14,83 @@
         <span style="padding-left: 6px; color: white">{{itemNames[userInfo.itemType - 1]}}</span>
       </div>
     </div>
-    <button @click="sendGift(1)">赠送礼物1</button>
-    <button @click="sendGift(2)">赠送礼物2</button>
-    <button @click="sendGift(3)">赠送礼物3</button>
+    <div :class="$style['control-wrapper']">
+      <div class="option">
+        <div :class="$style['option-top']" style="padding: 0 6px 24px 6px;">
+          <p style='padding: 14px 0'>礼品赠送区</p>
+          <div :class="$style['gift-wrapper']">
+            <div data-type="gift-item">
+              <div data-type="gift-img">
+                <img src="./gift1.png" alt="">
+              </div>
+              <div data-type="gift-button" @click="handleOpenGiftWrapper(1)">
+                赠送
+              </div>
+            </div>
+            <div data-type="gift-item">
+              <div data-type="gift-img">
+                <img src="./gift2.png" alt="">
+              </div>
+              <div data-type="gift-button" @click="handleOpenGiftWrapper(2)">
+                赠送
+              </div>
+            </div>
+            <div data-type="gift-item">
+              <div data-type="gift-img">
+                <img src="./gift3.png" alt="">
+              </div>
+              <div data-type="gift-button" @click="handleOpenGiftWrapper(3)">
+                赠送
+              </div>
+            </div>
+          </div>
+        </div>
+        <div :class="$style['option-bottom']">
+          <div style='width: 50%; float: left' >
+            <div data-type="praise-button" @click='handleClickPraise'>
 
-    <input placeholder="请输入内容" v-model='msg'>
+            </div>
+          </div>
+          <div style='width: 50%; position:relative; float: left; height: 96px' >
+            <p :class="$style['msg-button']" @click="currentOption='msg'">
+              弹幕
+            </p>
+          </div>
+        </div>
+      </div>
+      <div :class="$style['send-gift-wrapper']" v-if="currentOption == 'gift'">
+        <p style="padding: 12px 0;">赠送礼物</p>
+        <img :src="currentGiftImg" alt="" style='height: 180px; margin-bottom:6px'>
+        <p style="padding: 12px 0">赠送节目名称：{{itemNames[userInfo.itemType - 1]}}</p>
+        <div :class="$style['send-buttons']">
+          <div data-type='send-button-item' style="padding-right:6px" @click='sendGift'>
+            <p>发送</p>
+          </div>
+          <div data-type='send-button-item' style="padding-right:6px" @click="currentOption=''">
+            <p>取消</p>
+          </div>
+        </div>
+      </div>
+
+      <div :class="$style['send-msg-wrapper']" v-if="currentOption == 'msg'">
+          <div style="padding: 0 12px;">
+            <p style="padding: 12px 0;">发送弹幕</p>
+            <textarea data-type='textarea' placeholder="请在此输入您的祝福"/>
+          </div>
+          <div :class="$style['send-buttons']">
+            <div data-type='send-button-item' style="padding-right:6px" @click='sendGift'>
+              <p>发送</p>
+            </div>
+            <div data-type='send-button-item' style="padding-right:6px" @click="currentOption=''">
+              <p>取消</p>
+            </div>
+          </div>
+      </div>
+    </div>
+    <!-- <input placeholder="请输入内容" v-model='msg'>
     <button @click='submitText(msg)'>发送祝福语</button>
 
-    <button @click='handleClickTicket'>开始投票</button>
-    <button @click='handleClickPraise'>点赞</button>
+    <button @click='handleClickTicket'>开始投票</button> -->
   </div>
 </template>
 
@@ -34,23 +102,31 @@ export default {
   data () {
     return {
       itemNames: ['节目1', '节目2', '节目3', '节目4', '节目5', '节目6', '节目7', '节目8'],
-      name: '',
-      img: '',
-      msg: ''
+      currentGift: 1, //当前的礼物id， 默认1
+      currentOption: ''
     }
   },
   computed: {
   ...mapState(['userInfo']),
   wcUser(){
     return this.userInfo.userInfo
+  },
+  currentGiftImg(){
+    return require(`./gift${this.currentGift}.png`)
   }
   },
   methods: {
+
+    //选择了赠送礼物
+    handleOpenGiftWrapper(val) {
+      this.currentGift = val
+      this.currentOption = 'gift'
+    },
     /**
     发送礼物
     **/
-    sendGift(gift){
-      axiosPost(`${this.$Host}/sendGift`, Object.assign({itemtype: this.userInfo.itemType, gift}, this.wcUser))
+    sendGift(){
+      axiosPost(`${this.$Host}/sendGift`, Object.assign({itemtype: this.userInfo.itemType, gift: this.currentGift}, this.wcUser))
     },
     /**
     发送祝福语
@@ -89,6 +165,7 @@ export default {
   padding: 24px 18px;
   min-height: 100vh;
   color: white;
+  background: linear-gradient(#060503, #231001);
 }
 .logo-wrapper {
   height: 32px;
@@ -114,10 +191,136 @@ export default {
 }
 .current-item {
   margin-top: 34px;
-  background-color: fade(@primary-color, 20%);
+  background-color: #251f0f;
   padding: 4px 0;
   color: @primary-color;
   font-weight: bold;
   border-radius: 12px;
+}
+.control-wrapper {
+  margin-top: 12px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.option-top {
+  background-color: #251f0f;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+.gift-wrapper {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  & [data-type='gift-item'] {
+    width: 33.33%;
+    float: left;
+    padding: 0 1px;
+  }
+  & [data-type='gift-img'] {
+    height: 120px;
+
+    & img {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  & [data-type='gift-button'] {
+    margin-top: 6px;
+    padding: 4px 0;
+    background-color: #b69c47;
+    border-radius: 4px;
+    color: #241200;
+    font-size: 12px;
+    letter-spacing: 6px;
+  }
+}
+
+.option-bottom {
+  padding-left: 33%;
+  background-color: #362710;
+  border-radius: 4px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+  & [data-type='praise-button'] {
+    width: 96px;
+    height: 96px;
+    border: 6px solid #b69c47;
+    border-radius: 50%;
+    margin: 0 auto;
+  }
+}
+
+.msg-button {
+  width: 48px;
+  height: 48px;
+  background-color: #b69c47;
+  border-radius: 50%;
+  line-height: 48px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+}
+
+.send-gift-wrapper {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(#251f0f, #3b2a0e);
+}
+
+.send-buttons {
+  padding: 0 12px;
+  &:after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+  & [data-type='send-button-item'] {
+    width: 50%;
+    float: left;
+    & p {
+      padding: 6px 0;
+      border-radius: 4px;
+      background-color: #b69c47;
+      color: #241100;
+      font-size: 12px;
+      letter-spacing: 12px;
+    }
+  }
+}
+
+.send-msg-wrapper {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(#251f0f, #3b2a0e);
+    & [data-type='textarea'] {
+      background: #b69c47;
+      color: #746222;
+      border: none;
+      border-radius: 4px;
+      outline: none;
+      width: 100%;
+      height: 220px;
+      margin-bottom: 12px;
+      resize: none;
+      padding: 12px 6px;
+      font-size: 18px;
+    }
 }
 </style>

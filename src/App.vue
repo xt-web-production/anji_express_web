@@ -7,17 +7,11 @@
 <script>
 import axios from 'axios';
 import io from 'socket.io-client';
-import faker from 'faker';
 import {mapActions} from 'vuex'
 import {getParam} from '@/lib/factory'
 export default {
   name: 'app',
   created() {
-    axios.post(`${this.$Host}/getToken`, {code: getParam(window.location.href, 'code')}).then(res=>{
-      console.log(res);
-    }).catch(err=>{
-      console.log(err);
-    })
     //初始化 当前节目
     this.initGetCurrentItemType()
     const socket = io(this.$Host);
@@ -25,18 +19,9 @@ export default {
     socket.on('screen', function(val) {
       that.update_item_type(val.id)
     })
-    this.getWchartUserInfo()
   },
   methods: {
-    ...mapActions(['update_item_type', 'update_user_info']),
-    //获取微信用户信息（头像、图片）
-    getWchartUserInfo(){
-      this.update_user_info({
-        name: faker.name.findName(),
-        img: faker.image.imageUrl(),
-        openId: '001001000111'
-      })
-    },
+    ...mapActions(['update_item_type']),
     initGetCurrentItemType(){
       axios.post(`${this.$Host}/queryCurrentItemType`).then(res=> {
         const currentItemType = res.data.data.currentItemType
