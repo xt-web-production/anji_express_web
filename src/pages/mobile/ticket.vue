@@ -3,20 +3,20 @@
     <div :class="$style['logo-wrapper']">
       <img :src="require('../../assets/logo.png')" alt="">
     </div>
-    <p>请点击下面图标</p>
-    <p>为喜爱的节目投票吧</p>
+    <p style="padding: 24px 0">请点击下面图标</p>
+    <p style="padding-bottom: 24px; font-size:28px;color:#ffe68c;font-weight:bold">为喜爱的节目投票吧</p>
     <div :class="$style['ticket-send-wrapper']">
       <div :class="$style['select-ticket']">
-        <div data-type="ticket-item" v-for='item in 4'>
+        <div data-type="ticket-item" v-for='item in 4' @click='handleChangeTicket(item)'>
           <div data-type="star">
             <svg t="1515380343123" style="opacity: 0" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
-            <svg t="1515380343123" data-type="svg-star" class="icon" :style="currentSelectId == 'item' ? 'fill: #ff6761' : 'fill: #ffe68c'" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
+            <svg t="1515380343123" data-type="svg-star" class="icon" :style="currentSelectId == item ? 'fill: #ff6761' : 'fill: #ffe68c'" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
           </div>
           <p style="font-size: 12px; padding: 6px 0">{{itemNames[item]}}</p>
         </div>
       </div>
       <div :class="$style['select-ticket']">
-        <div data-type="ticket-item" v-for='item in 4'>
+        <div data-type="ticket-item" v-for='item in 4' @click='currentSelectId = item + 4'>
           <div data-type="star">
             <svg t="1515380343123" style="opacity: 0" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
             <svg t="1515380343123" data-type="svg-star" class="icon" :style="currentSelectId == item + 4 ? 'fill: #ff6761' : 'fill: #ffe68c'" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
@@ -24,16 +24,16 @@
           <p style="font-size: 12px; padding: 6px 0">{{itemNames[item + 4]}}</p>
         </div>
       </div>
-    </div>
 
-    <button @click='handleCLickTick(1)'>节目1</button>
-    <button @click='handleCLickTick(2)'>节目2</button>
-    <button @click='handleCLickTick(3)'>节目3</button>
-    <button @click='handleCLickTick(4)'>节目4</button>
-    <button @click='handleCLickTick(5)'>节目5</button>
-    <button @click='handleCLickTick(6)'>节目6</button>
-    <button @click='handleCLickTick(7)'>节目7</button>
-    <button @click='handleCLickTick(8)'>节目8</button>
+      <div :class="$style['send-buttons']" class='send-buttons'>
+        <div data-type='send-button-item' style="padding-right:6px" @click='handleCLickTick'>
+          <p>确定</p>
+        </div>
+        <div data-type='send-button-item' style="padding-right:6px" @click="$router.push('/')">
+          <p>返回直播间</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -42,11 +42,11 @@ import {axiosPost} from '@/lib/ajax.js';
 import {mapState} from 'vuex';
 import {itemNames} from '@/lib/factory';
 export default {
-  name: 'HelloWorld',
+  name: 'ticket',
   data () {
     return {
       itemNames,
-      currentSelectId : 100
+      currentSelectId : ''
     }
   },
   computed: {
@@ -56,14 +56,19 @@ export default {
     }
   },
   methods: {
-    handleCLickTick(val){
-      axiosPost(`${this.$Host}/isAllowMobileSendTicket`, Object.assign({itemType: val}, this.wcUser)).then(res=> {
+    handleChangeTicket(val){
+      this.currentSelectId = val
+      console.log(val);
+    },
+    handleCLickTick(){
+      if (!this.currentSelectId) return
+      axiosPost(`${this.$Host}/isAllowMobileSendTicket`, Object.assign({itemType: this.currentSelectId}, this.wcUser)).then(res=> {
         const count = res.data
         console.log(count);
         if (count) {
           throw res
         } else {
-          axiosPost(`${this.$Host}/mobileSendTicket`, Object.assign({itemType: val}, this.wcUser)).then(res=> {
+          axiosPost(`${this.$Host}/mobileSendTicket`, Object.assign({itemType: this.currentSelectId}, this.wcUser)).then(res=> {
             this.$MessageBox('提示', '投票成功！')
           })
         }
@@ -122,6 +127,26 @@ export default {
       left: 0;
       right: 0;
       margin: auto;
+    }
+  }
+}
+.send-buttons {
+  padding: 0 12px;
+  &:after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+  & [data-type='send-button-item'] {
+    width: 50%;
+    float: left;
+    & p {
+      padding: 6px 0;
+      border-radius: 4px;
+      background-color: #b69c47;
+      color: #241100;
+      font-size: 12px;
+      letter-spacing: 12px;
     }
   }
 }
