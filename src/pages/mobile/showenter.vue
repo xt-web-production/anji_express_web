@@ -30,7 +30,7 @@ export default {
           throw res
         }
         this.$router.push('mobile')
-      }).catch(err=>{
+      }).catch(()=>{
         this.$MessageBox('提示:', '表演还没开始,请稍等！');
       })
     }

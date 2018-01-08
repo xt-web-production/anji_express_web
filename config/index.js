@@ -10,11 +10,20 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
-
-    // Various Dev Server settings
-    host: '0.0.0.0', // can be overwritten by process.env.HOST
-    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    proxyTable: {
+  // proxy all requests starting with /api to jsonplaceholder
+    '/api': {
+        target: 'http://127.0.0.1:8009', //http://192.168.1.161:8083 http://192.168.100.172:8080
+        /*  target: 'http://192.168.40.248:8084',*/
+        changeOrigin: true,
+        pathRewrite: { //需要rewrite重写的, 如果在服务器端做了处理则可以不要这段
+          '^/api': '/'
+        }
+      }
+    },
+    // Various Dev Server set
+    host: '192.168.0.25', // can be overwritten by process.env.HOST
+    port: 8085, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
@@ -55,7 +64,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/mobile/',
+    assetsPublicPath: '/',
 
     /**
      * Source Maps

@@ -13,7 +13,7 @@ import storagejs from '@/lib/storagejs'
 export default {
   name: 'mobile-contenter',
   created() {
-    const anjiUserInfo = storagejs.set('anjiUserInfo')
+    const anjiUserInfo = storagejs.get('anjiUserInfo')
     if (anjiUserInfo) {
       this.update_user_info(anjiUserInfo)
       return

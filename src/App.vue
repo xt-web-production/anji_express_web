@@ -14,7 +14,7 @@ export default {
   created() {
     //初始化 当前节目
     this.initGetCurrentItemType()
-    const socket = io(this.$Host);
+    const socket = io(this.$SocketHost);
     const that = this
     socket.on('screen', function(val) {
       that.update_item_type(val.id)

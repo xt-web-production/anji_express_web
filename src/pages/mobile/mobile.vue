@@ -11,7 +11,7 @@
     </div>
     <div class="current-item-type">
       <div :class="$style['current-item']">当前节目:
-        <span style="padding-left: 6px; color: white">{{itemNames[userInfo.itemType - 1]}}</span>
+        <span style="padding-left: 6px; color: white">{{itemNames[userInfo.itemType]}}</span>
       </div>
     </div>
     <div :class="$style['control-wrapper']">
@@ -23,7 +23,7 @@
               <div data-type="gift-img">
                 <img src="./gift1.png" alt="">
               </div>
-              <div data-type="gift-button" @click="handleOpenGiftWrapper(1)">
+              <div data-type="gift-button" @click=" currentGift = 1; currentOption = 'gift'">
                 赠送
               </div>
             </div>
@@ -31,7 +31,7 @@
               <div data-type="gift-img">
                 <img src="./gift2.png" alt="">
               </div>
-              <div data-type="gift-button" @click="handleOpenGiftWrapper(2)">
+              <div data-type="gift-button" @click=" currentGift = 2; currentOption = 'gift'">
                 赠送
               </div>
             </div>
@@ -39,7 +39,7 @@
               <div data-type="gift-img">
                 <img src="./gift3.png" alt="">
               </div>
-              <div data-type="gift-button" @click="handleOpenGiftWrapper(3)">
+              <div data-type="gift-button" @click=" currentGift = 3; currentOption = 'gift'">
                 赠送
               </div>
             </div>
@@ -52,7 +52,7 @@
             </div>
           </div>
           <div style='width: 50%; position:relative; float: left; height: 96px' >
-            <p :class="$style['msg-button']" @click="currentOption='msg'">
+            <p :class="$style['msg-button']" @click="currentOption='msg'; msg = ''">
               弹幕
             </p>
           </div>
@@ -61,7 +61,7 @@
       <div :class="$style['send-gift-wrapper']" v-if="currentOption == 'gift'">
         <p style="padding: 12px 0;">赠送礼物</p>
         <img :src="currentGiftImg" alt="" style='height: 180px; margin-bottom:6px'>
-        <p style="padding: 12px 0">赠送节目名称：{{itemNames[userInfo.itemType - 1]}}</p>
+        <p style="padding: 12px 0">赠送节目名称：{{itemNames[userInfo.itemType]}}</p>
         <div :class="$style['send-buttons']">
           <div data-type='send-button-item' style="padding-right:6px" @click='sendGift'>
             <p>发送</p>
@@ -75,10 +75,10 @@
       <div :class="$style['send-msg-wrapper']" v-if="currentOption == 'msg'">
           <div style="padding: 0 12px;">
             <p style="padding: 12px 0;">发送弹幕</p>
-            <textarea data-type='textarea' placeholder="请在此输入您的祝福"/>
+            <textarea data-type='textarea' v-model='msg' placeholder="请在此输入您的祝福"/>
           </div>
           <div :class="$style['send-buttons']">
-            <div data-type='send-button-item' style="padding-right:6px" @click='sendGift'>
+            <div data-type='send-button-item' style="padding-right:6px" @click='submitText'>
               <p>发送</p>
             </div>
             <div data-type='send-button-item' style="padding-right:6px" @click="currentOption=''">
@@ -97,12 +97,14 @@
 <script>
 import {axiosPost} from '@/lib/ajax.js';
 import {mapState} from 'vuex';
+import {itemNames} from '@/lib/factory'
 export default {
   name: 'mobile',
   data () {
     return {
-      itemNames: ['节目1', '节目2', '节目3', '节目4', '节目5', '节目6', '节目7', '节目8'],
+      itemNames,
       currentGift: 1, //当前的礼物id， 默认1
+      msg: '', //祝福语
       currentOption: ''
     }
   },
@@ -116,12 +118,6 @@ export default {
   }
   },
   methods: {
-
-    //选择了赠送礼物
-    handleOpenGiftWrapper(val) {
-      this.currentGift = val
-      this.currentOption = 'gift'
-    },
     /**
     发送礼物
     **/
@@ -131,8 +127,11 @@ export default {
     /**
     发送祝福语
     **/
-    submitText(text){
-      axiosPost(`${this.$Host}/addText`, Object.assign({itemtype: this.userInfo.itemType, text}, this.wcUser))
+    submitText(){
+      axiosPost(`${this.$Host}/addText`, Object.assign({itemtype: this.userInfo.itemType, text: this.msg}, this.wcUser)).then(res=> {
+        this.$Toast('发送成功!')
+        this.currentOption = ''
+      })
     },
     /**
     点赞
@@ -195,11 +194,11 @@ export default {
   padding: 4px 0;
   color: @primary-color;
   font-weight: bold;
-  border-radius: 12px;
+  border-radius: 10px;
 }
 .control-wrapper {
   margin-top: 12px;
-  border-radius: 12px;
+  border-radius: 10px;
   position: relative;
   overflow: hidden;
 }
