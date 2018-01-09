@@ -21,7 +21,7 @@
         <div :class="$style['gift-wrapper']">
           <div data-type="gift-item">
             <div data-type="gift-img">
-              <img src="./gift1.png" alt="">
+              <img src="./gift1.jpg" alt="">
             </div>
             <div data-type="gift-button" @click=" currentGift = 1; currentOption = 'gift'">
               赠送
@@ -29,7 +29,7 @@
           </div>
           <div data-type="gift-item">
             <div data-type="gift-img">
-              <img src="./gift2.png" alt="">
+              <img src="./gift2.jpg" alt="">
             </div>
             <div data-type="gift-button" @click=" currentGift = 2; currentOption = 'gift'">
               赠送
@@ -37,7 +37,7 @@
           </div>
           <div data-type="gift-item">
             <div data-type="gift-img">
-              <img src="./gift3.png" alt="">
+              <img src="./gift3.jpg" alt="">
             </div>
             <div data-type="gift-button" @click=" currentGift = 3; currentOption = 'gift'">
               赠送
@@ -47,14 +47,17 @@
       </div>
       <div :class="$style['option-bottom']">
         <div style='width: 50%; float: left'>
-          <div data-type="praise-button" @click='handleClickPraise'>
+          <div :class="$style['crile-button']" @click='handleClickPraise'>
+            <div data-type="button-item" :style="'background-size: 90%;background-position: 4px 4px;background-repeat: no-repeat;background-image: url(' + require('./finger.png') + ');'">
 
+            </div>
           </div>
         </div>
         <div style='width: 50%; position:relative; float: left; height: 96px'>
-          <p :class="$style['msg-button']" @click="currentOption='msg'; msg = ''">
-            弹幕
-          </p>
+          <div :class="$style['crile-button']" @click="currentOption='msg'; msg = ''">
+            <div data-type="button-item" :style="'background-size: 50%;background-position:center;background-repeat: no-repeat;background-image: url(' + require('./msg.png') + ');'">
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -184,7 +187,7 @@ export default {
     background: linear-gradient(#060503, #231001);
 }
 .logo-wrapper {
-    height: 32px;
+    height: 28px;
     margin-bottom: 12px;
     text-align: left;
     & img {
@@ -220,7 +223,7 @@ export default {
     overflow: hidden;
 }
 .option-top {
-    background-color: #251f0f;
+    background: linear-gradient(#251f0f, #36280f);
     border-radius: 4px;
     margin-bottom: 6px;
 }
@@ -237,9 +240,11 @@ export default {
     }
     & [data-type='gift-img'] {
         height: 120px;
-
+        border-radius: 4px;
+        overflow: hidden;
         & img {
             height: 100%;
+            width: 100%;
             object-fit: cover;
         }
     }
@@ -255,8 +260,7 @@ export default {
 }
 
 .option-bottom {
-    padding-left: 33%;
-    background-color: #362710;
+    background-color: #36280f;
     border-radius: 4px;
     padding-top: 18px;
     padding-bottom: 18px;
@@ -265,27 +269,31 @@ export default {
         display: table;
         clear: both;
     }
-    & [data-type='praise-button'] {
-        width: 96px;
-        height: 96px;
-        border: 6px solid #b69c47;
-        border-radius: 50%;
-        margin: 0 auto;
-    }
 }
-
-.msg-button {
-    width: 48px;
-    height: 48px;
-    background-color: #b69c47;
+.crile-button {
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
-    line-height: 48px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    margin: auto;
+    margin: 0 auto;
+    position: relative;
+    background: linear-gradient(#443416, #b59b45);
+    transition: transform .1s ease;
+    &:active {
+      transform: scale(.8);
+    }
+    & [data-type='button-item'] {
+      background-color: #ffefba;
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      overflow: hidden;
+    }
 }
 
 .send-gift-wrapper {

@@ -1,5 +1,8 @@
 <template>
   <div :class="$style.control" :style="'background-position: center; background-image: url(' + require('./bg.jpg') + ');'">
+    <div :class="$style['logo-wrapper']">
+      <img :src="require('../../assets/logo.png')" alt="">
+    </div>
     <div :class="$style['burron-wrapper']">
       <p :class='$style.button' class='button animated bounceInUp' @click="handleClickEnterShow" v-if='this.wcUser.img'>登录到直播间</p>
     </div>
@@ -48,6 +51,17 @@ export default {
     overflow: hidden;
     background-repeat: no-repeat;
     background-size: cover;
+  }
+  .logo-wrapper {
+      height: 28px;
+      margin-bottom: 12px;
+      text-align: left;
+      position: absolute;
+      top: 24px;
+      left: 18px;
+      & img {
+          height: 100%;
+      }
   }
   .burron-wrapper {
     position: absolute;
