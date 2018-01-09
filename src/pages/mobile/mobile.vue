@@ -7,7 +7,7 @@
     <div :class="$style['user-img']">
       <img :src="wcUser.img" alt="" style="width: 100%;  height: 100%; object-fit: cover">
     </div>
-    <p :class="$style['user-name']">{{wcUser.name}}1312</p>
+    <p :class="$style['user-name']">{{wcUser.name}}</p>
   </div>
   <div class="current-item-type">
     <div :class="$style['current-item']">当前节目:

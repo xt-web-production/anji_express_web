@@ -5,6 +5,9 @@
 </template>
 
 <script>
+import {
+  mapState
+} from 'vuex';
 import axios from 'axios';
 import io from 'socket.io-client';
 export default {
@@ -17,7 +20,7 @@ export default {
   },
 
   created() {
-    const socket = io(this.$Host);
+    const socket = io(this.$SocketHost);
     socket.on('connect', function(val) {
       socket.emit('customSocket', { customId: '000CustomIdHere0000' });
     })
@@ -37,8 +40,9 @@ export default {
     //this.queryPraise()
   },
   computed: {
+    ...mapState(['userInfo']),
   itemImg(){
-    return require(`./imgs/${this.itemType}.jpg`)
+    return require(`./imgs/${this.userInfo.itemType}.jpg`)
   }
 },
   methods: {

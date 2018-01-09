@@ -4,6 +4,8 @@ import mobilewrapper from '@/pages/mobile'
 import showenter from '@/pages/mobile/showenter'
 import mobile from '@/pages/mobile/mobile'
 import ticket from '@/pages/mobile/ticket'
+import control from '@/pages/control'
+import bigscreen from '@/pages/bigscreen'
 
 Vue.use(Router)
 
@@ -30,6 +32,16 @@ export default new Router({
           component: ticket
         }
       ]
+    },
+    {
+      path: '/control',
+      name: 'control',
+      component: control
+    },
+    {
+      path: '/bigscreen',
+      name: 'bigscreen',
+      component: bigscreen
     }
   ]
 })
