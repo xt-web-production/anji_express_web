@@ -29,7 +29,7 @@
 
     <h2> -----弹幕管理----- </h2>
     <button @click="getQueryTextListsByPage">翻页</button>
-    <button @click="getQueryTextLists">刷新</button>
+    <button @click="getQueryTextLists(0)">刷新</button>
     <table cellspacing="0" cellpadding="0" border="0">
       <thead>
         <tr class="">
@@ -97,10 +97,10 @@ export default {
   //翻页
   getQueryTextListsByPage(){
     this.page ++;
-    this.getQueryTextLists()
+    this.getQueryTextLists(1)
   },
   //获取祝福语列表
-  getQueryTextLists(){
+  getQueryTextLists(isAddPage = 0){
     const params = {
       page: this.page * 10,
       pagesize: 10,
@@ -109,7 +109,8 @@ export default {
     axiosPost(`${this.$Host}/queryText`, params).then(res=>{
       if(res.data.length < 1) {
         this.page = 0
-        this.$MessageBox('已经是最后一页！')
+        console.log(isAddPage);
+        isAddPage && this.$MessageBox('已经是最后一页！')
         return
       }
       this.textLists = res.data

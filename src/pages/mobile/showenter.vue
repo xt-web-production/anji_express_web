@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.control" :style="'background-position: center; background-image: url(' + require('./bg.jpg') + ');'">
+  <div :class="$style.control" :style="'background-position: center; background-image: url(' + require('../../assets/bg.jpg') + ');'">
     <div :class="$style['logo-wrapper']">
       <img :src="require('../../assets/logo.png')" alt="">
     </div>
