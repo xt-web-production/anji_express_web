@@ -8,7 +8,26 @@
       <textitem :name='item.name' :text='item.text' :id='item.id' :style='`top:${item.top * 120}px`' @onSlideEnd='onSlideEnd' v-for='item in textItems'/>
     </div>
   </div>
-  <h1>大屏幕</h1>
+
+  <div>
+    <transition name="gift-list-complete" tag="p" style="white-space: nowrap;">
+      <div :class="$style['gift-list-item']" v-if='currentGiftItem'>
+        <span :class="$style['gift-user-img']" :style="'background-image: url(' + currentGiftItem.img +');'">
+        </span>
+        <div style="text-align: left;overflow: hidden;">
+          <p style="margin-bottom: 0px; font-size: 28px; color:white">{{currentGiftItem.name}}</p>
+          <p style='color:#dcbe4a;font-weight:bold;font-size: 28px;'>为该节目赠送了礼物</p>
+        </div>
+        <img src="./gift.png" style="position: absolute;top: -40px;right: 24px;width: 140px;">
+      </div>
+    </transition>
+  </div>
+
+  <div class="gift-wrapper">
+    <div ref='gift-slider' id='text-slider' style="text-align:right;white-space: nowrap;position: relative;">
+      <!-- <textitem :name='item.name' :text='item.text' :id='item.id' :style='`top:${item.top * 120}px`' @onSlideEnd='onSlideEnd' v-for='item in textItems'/> -->
+    </div>
+  </div>
 
   <svg style="display: none" x="0px" y="0px" width="1072" height="1024" viewBox="0 0 1024 1024" xmlns="">
        <!-- 生日提醒 -->
@@ -31,6 +50,8 @@ export default {
   name: 'HelloWorld',
   data() {
     return {
+      currentGiftItem: null,
+    nextNum: 10,
       itemType: 1,
       msg: 'Welcome to Your Vue.js App',
       componentName: 'textitem',
@@ -58,11 +79,13 @@ export default {
     })
     socket.on('gift', function(data) {
       console.log('this is gift', data)
+      that.currentGiftItem = null
+      setTimeout(()=>{
+        that.currentGiftItem = data
+        console.log(that.currentGiftItem);
+      }, 500)
     })
     socket.on('text', function(data) {
-      console.log('this is text', data)
-      console.log(that.textItems);
-      console.log(that.textItems.length);
       const preTop = that.textItems[that.textItems.length - 1] == undefined ? 0 : that.textItems[that.textItems.length - 1].top
       const top = preTop < 3 ? preTop + 1 : 0
       that.textItems.push({
@@ -110,7 +133,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style module>
+<style lang='less' module>
 .bigScreen {
   height: 1500px;
   width: 833px;
@@ -118,7 +141,7 @@ export default {
   background-repeat: no-repeat;
   position: relative;
   padding: 64px 0;
-  background-image: none !important;
+  // background-image: none !important;
 }
 
 .logo-wrapper {
@@ -127,5 +150,46 @@ export default {
   padding-left: 42px;
   text-align: left;
   position: relative;
+}
+.gift-item {
+  padding: 18px;
+}
+.gift-list-item {
+  width: 514px;
+  background-color: rgba(220,190,74,0.2);
+  padding:6px 160px 6px 100px;
+  border-radius: 45px;
+  transition: all 1s;
+  display: inline-block;
+  position: relative;
+}
+.gift-user-img {
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>
+<style lang='less' scoped>
+.gift-list-complete-enter
+/* .gift-list-complete-leave-active for below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateX(200px);
+}
+.gift-list-complete-leave
+/* .gift-list-complete-leave-active for below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateX(-200px);
+}
+.gift-list-complete-leave-active {
+  position: absolute;
 }
 </style>

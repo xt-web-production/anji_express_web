@@ -23,7 +23,7 @@
             <div data-type="gift-img">
               <img src="./gift1.jpg" alt="">
             </div>
-            <div data-type="gift-button" @click=" currentGift = 1; currentOption = 'gift'">
+            <div data-type="gift-button" @click="handleClickOpenGift(1)">
               赠送
             </div>
           </div>
@@ -31,7 +31,7 @@
             <div data-type="gift-img">
               <img src="./gift2.jpg" alt="">
             </div>
-            <div data-type="gift-button" @click=" currentGift = 2; currentOption = 'gift'">
+            <div data-type="gift-button" @click="handleClickOpenGift(2)">
               赠送
             </div>
           </div>
@@ -39,7 +39,7 @@
             <div data-type="gift-img">
               <img src="./gift3.jpg" alt="">
             </div>
-            <div data-type="gift-button" @click=" currentGift = 3; currentOption = 'gift'">
+            <div data-type="gift-button" @click="handleClickOpenGift(3)">
               赠送
             </div>
           </div>
@@ -123,10 +123,17 @@ export default {
       return this.userInfo.userInfo
     },
     currentGiftImg() {
-      return require(`./gift${this.currentGift}.png`)
+      return require(`./gift${this.currentGift}.jpg`)
     }
   },
   methods: {
+    /*
+    打开礼物页面
+    */
+    handleClickOpenGift(val){
+      this.currentGift = val
+      this.currentOption = 'gift'
+    },
     /**
     发送礼物
     **/

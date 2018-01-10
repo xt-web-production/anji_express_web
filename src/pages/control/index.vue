@@ -76,6 +76,7 @@ export default {
       }).then(()=>{
         this.itemtype = id
         storagejs.set('currentItemType', id)
+        this.getQueryTextLists(0)
       })
   },
   //开始直播
@@ -111,7 +112,6 @@ export default {
         this.page = 0
         console.log(isAddPage);
         isAddPage && this.$MessageBox('已经是最后一页！')
-        return
       }
       this.textLists = res.data
     })
