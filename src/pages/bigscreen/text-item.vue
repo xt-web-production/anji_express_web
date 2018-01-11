@@ -11,7 +11,7 @@ export default {
   data(){
     return {
       translateX:'100%',
-      duration: [7,8,9,7][parseInt(Math.random()* 3 )]
+      duration: [7,8,9,7][parseInt(Math.random() * 3 )]
     }
   },
   props: {
@@ -49,7 +49,7 @@ export default {
   },
   beforeDestroy(){
     const selfDom = this.$refs['text-item']
-    const parent = document.getElementById("text-slider");
+    const parent = document.getElementById('text-slider');
     parent.removeChild(selfDom);
   }
 }

@@ -108,7 +108,7 @@ export default {
       itemtype: this.itemtype
     }
     axiosPost(`${this.$Host}/queryText`, params).then(res=>{
-      if(res.data.length < 1) {
+      if (res.data.length < 1) {
         this.page = 0
         console.log(isAddPage);
         isAddPage && this.$MessageBox('已经是最后一页！')

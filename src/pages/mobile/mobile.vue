@@ -26,6 +26,7 @@
             <div data-type="gift-button" @click="handleClickOpenGift(1)">
               赠送
             </div>
+            <p @click='sendGift'>test</p>
           </div>
           <div data-type="gift-item">
             <div data-type="gift-img">

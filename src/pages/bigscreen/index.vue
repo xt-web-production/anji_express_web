@@ -5,12 +5,12 @@
   </div>
   <div class="text-wrapper">
     <div ref='text-slider' class="text-slider" id='text-slider' style="text-align:right;white-space: nowrap;position: relative;">
-      <textitem :name='item.name' :text='item.text' :id='item.id' :style='`top:${item.top * 120}px`' @onSlideEnd='onSlideEnd' v-for='item in textItems'/>
+      <textitem :name='item.name' :text='item.text' :id='item.id' :style='`top:${item.top * 120}px`' @onSlideEnd='onSlideEnd' v-for='item,index in textItems' :key="'text' + index" />
     </div>
   </div>
 
-  <div>
-    <transition name="gift-list-complete" tag="p" style="white-space: nowrap;">
+  <div class='gift-wrapper'>
+    <transition name="gift-list-complete" style="white-space: nowrap;">
       <div :class="$style['gift-list-item']" v-if='currentGiftItem'>
         <span :class="$style['gift-user-img']" :style="'background-image: url(' + currentGiftItem.img +');'">
         </span>
@@ -21,12 +21,6 @@
         <img src="./gift.png" style="position: absolute;top: -40px;right: 24px;width: 140px;">
       </div>
     </transition>
-  </div>
-
-  <div class="gift-wrapper">
-    <div ref='gift-slider' id='text-slider' style="text-align:right;white-space: nowrap;position: relative;">
-      <!-- <textitem :name='item.name' :text='item.text' :id='item.id' :style='`top:${item.top * 120}px`' @onSlideEnd='onSlideEnd' v-for='item in textItems'/> -->
-    </div>
   </div>
 
   <svg style="display: none" x="0px" y="0px" width="1072" height="1024" viewBox="0 0 1024 1024" xmlns="">
@@ -43,6 +37,7 @@ import {
   mapState
 } from 'vuex';
 import _Array from 'lodash/Array';
+import _Fun from 'lodash/Function';
 import textitem from './text-item.vue'
 import axios from 'axios';
 import io from 'socket.io-client';
@@ -51,7 +46,7 @@ export default {
   data() {
     return {
       currentGiftItem: null,
-    nextNum: 10,
+      giftItems: [],
       itemType: 1,
       msg: 'Welcome to Your Vue.js App',
       componentName: 'textitem',
@@ -60,7 +55,7 @@ export default {
         id: 1,
         text: '欢迎大家参加联欢晚会',
         top: 0
-      }],
+      }]
     }
   },
   created() {
@@ -78,12 +73,7 @@ export default {
       console.log(val);
     })
     socket.on('gift', function(data) {
-      console.log('this is gift', data)
-      that.currentGiftItem = null
-      setTimeout(()=>{
-        that.currentGiftItem = data
-        console.log(that.currentGiftItem);
-      }, 500)
+      that.giftItems.push(data)
     })
     socket.on('text', function(data) {
       const preTop = that.textItems[that.textItems.length - 1] == undefined ? 0 : that.textItems[that.textItems.length - 1].top
@@ -96,10 +86,32 @@ export default {
       })
     })
   },
+  watch: {
+    // 监听动态显示礼物
+    giftItems(val){
+      if (val.length) {
+          !this.setInterGift && this.initIntervalGift()
+      } else {
+        if (this.setInterGift) {
+          clearInterval(this.setInterGift)
+          this.setInterGift = null
+        }
+      }
+    }
+  },
   computed: {
     ...mapState(['userInfo'])
   },
   methods: {
+    initIntervalGift(){
+      this.setInterGift = setInterval(()=>{
+             this.currentGiftItem = null
+             setTimeout(()=>{
+               this.currentGiftItem = this.giftItems[0]
+               this.giftItems.splice(0,1)
+             }, 500)
+           },2000);
+    },
     initSetItemType(val) {
       axios.post(`${this.$Host}/queryCurrentItemType`).then(res => {
         const currentItemType = res.data.data.currentItemType
@@ -141,7 +153,7 @@ export default {
   background-repeat: no-repeat;
   position: relative;
   padding: 64px 0;
-  // background-image: none !important;
+  background-image: none !important;
 }
 
 .logo-wrapper {
@@ -179,17 +191,18 @@ export default {
 }
 </style>
 <style lang='less' scoped>
-.gift-list-complete-enter
+.gift-list-complete-enter, .gift-list-complete-leave-to
 /* .gift-list-complete-leave-active for below version 2.1.8 */ {
   opacity: 0;
   transform: translateX(200px);
 }
-.gift-list-complete-leave
-/* .gift-list-complete-leave-active for below version 2.1.8 */ {
+// .gift-list-complete-leave
+// /* .gift-list-complete-leave-active for below version 2.1.8 */ {
+//   opacity: 0;
+//   transform: translateX(-200px);
+// }
+.gift-list-complete-leave-active {
   opacity: 0;
   transform: translateX(-200px);
-}
-.gift-list-complete-leave-active {
-  position: absolute;
 }
 </style>
