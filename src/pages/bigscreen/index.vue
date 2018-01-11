@@ -3,9 +3,14 @@
   <div :class="$style['logo-wrapper']">
     <img style="height: 100%;" :src="require('../../assets/logo.png')" alt="">
   </div>
-  <div class="text-wrapper">
-    <div ref='text-slider' class="text-slider" id='text-slider' style="text-align:right;white-space: nowrap;position: relative;">
+  <div :class="$style['text-wrapper']">
+    <div ref='text-slider' id='text-slider' style="z-index:10;text-align:right;white-space: nowrap;position: relative;">
       <textitem :name='item.name' :text='item.text' :id='item.id' :style='`top:${item.top * 120}px`' @onSlideEnd='onSlideEnd' v-for='item,index in textItems' :key="'text' + index" />
+    </div>
+    <div :class="$style['img-box']" v-show='currentGiftId'>
+      <img src="./bggift1.jpg" alt="" v-show='currentGiftId == 1'>
+      <img src="./bggift2.jpg" alt="" v-show='currentGiftId == 2'>
+      <img src="./bggift3.jpg" alt="" v-show='currentGiftId == 3'>
     </div>
   </div>
 
@@ -100,7 +105,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['userInfo'])
+    ...mapState(['userInfo']),
+    currentGiftId(){
+      return this.currentGiftItem ? this.currentGiftItem.gift : 0
+    }
   },
   methods: {
     initIntervalGift(){
@@ -153,7 +161,7 @@ export default {
   background-repeat: no-repeat;
   position: relative;
   padding: 64px 0;
-  background-image: none !important;
+  // background-image: none !important;
 }
 
 .logo-wrapper {
@@ -163,6 +171,33 @@ export default {
   text-align: left;
   position: relative;
 }
+
+.text-wrapper {
+  position: relative;
+  height: 652px;
+  border: 1px solid red;
+  margin-top: 164px;
+  padding-top: 78px;
+}
+.img-box {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 15px;
+  left: 0;
+  right: 13px;
+  width: 630px;
+  height: 630px;
+  margin: auto;
+  border-radius: 50%;
+  overflow: hidden;
+  & img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
 .gift-item {
   padding: 18px;
 }

@@ -29,7 +29,7 @@
 
     <h2> -----弹幕管理----- </h2>
     <button @click="getQueryTextListsByPage">翻页</button>
-    <button @click="getQueryTextLists(0)">刷新</button>
+    <button @click="refshQueryTextListsByPage">刷新</button>
     <table cellspacing="0" cellpadding="0" border="0">
       <thead>
         <tr class="">
@@ -66,7 +66,7 @@ export default {
   },
   mounted(){
     this.itemtype = storagejs.get('currentItemType')
-    this.getQueryTextLists()
+    this.refshQueryTextListsByPage()
   },
   methods: {
     //切换场景
@@ -76,7 +76,7 @@ export default {
       }).then(()=>{
         this.itemtype = id
         storagejs.set('currentItemType', id)
-        this.getQueryTextLists(0)
+        this.refshQueryTextListsByPage()
       })
   },
   //开始直播
@@ -100,6 +100,12 @@ export default {
     this.page ++;
     this.getQueryTextLists(1)
   },
+  //刷新
+  refshQueryTextListsByPage(){
+    this.page = 0;
+    this.getQueryTextLists(0)
+  },
+
   //获取祝福语列表
   getQueryTextLists(isAddPage = 0){
     const params = {
@@ -110,8 +116,10 @@ export default {
     axiosPost(`${this.$Host}/queryText`, params).then(res=>{
       if (res.data.length < 1) {
         this.page = 0
-        console.log(isAddPage);
-        isAddPage && this.$MessageBox('已经是最后一页！')
+        if (isAddPage) {
+          this.page = -1
+          this.$MessageBox('已经是最后一页！')
+        }
       }
       this.textLists = res.data
     })
