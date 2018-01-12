@@ -1,5 +1,5 @@
 <template>
-<div :class="$style.bigScreen" :style="'background-position: center; background-image: url(' + require('../../assets/bg.jpg') + ');'">
+<div :class="$style.bigScreen" :style="'background-position: center; background-image: url(' + require('./big_bg.jpg') + ');'">
   <div :class="$style['logo-wrapper']">
     <img style="height: 100%;" :src="require('../../assets/logo.png')" alt="">
   </div>
@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <div class='gift-wrapper'>
+  <div class='gift-wrapper' style="margin-top: 112px;text-align: left;padding-left: 36px;">
     <transition name="gift-list-complete" style="white-space: nowrap;">
       <div :class="$style['gift-list-item']" v-if='currentGiftItem'>
         <span :class="$style['gift-user-img']" :style="'background-image: url(' + currentGiftItem.img +');'">
@@ -28,15 +28,20 @@
     </transition>
   </div>
 
-  <div class="enter-wrapper">
-    <p
-      v-for="item,index in currentEnterItems"
-      :key="'enter' + index"
-      class="enter-list-complete"
-    >
-      {{ item.name }}
-    </p>
+  <div :class="$style['footer-wrapper']">
+    <div class="enter-wrapper" style="text-align:left">
+      <p
+        v-for="item,index in currentEnterItems"
+        :key="'enter' + index"
+        :class="$style['enter-list-item']"
+      >
+      <img :src='item.img' alt="">
+        {{ item.name }}
+        <span style='color: #dcbe4a'>进入了直播间</span>
+      </p>
+    </div>
   </div>
+
 
   <svg style="display: none" x="0px" y="0px" width="1072" height="1024" viewBox="0 0 1024 1024" xmlns="">
        <!-- 生日提醒 -->
@@ -60,7 +65,11 @@ export default {
   name: 'HelloWorld',
   data() {
     return {
-      currentGiftItem: null,
+      currentGiftItem: {
+        name: '1231313',
+        img: './gift.png',
+        gift: 1
+      },
       giftItems: [], // 获取礼物列表
       enterItems: [], //用户登录列表
       itemType: 1,
@@ -206,20 +215,20 @@ export default {
 
 .text-wrapper {
   position: relative;
-  height: 652px;
+  height: 574px;
   border: 1px solid red;
-  margin-top: 164px;
+  margin-top: 110px;
   padding-top: 78px;
 }
 .img-box {
   position: absolute;
   z-index: 1;
   top: 0;
-  bottom: 15px;
+  bottom: 0;
   left: 0;
-  right: 13px;
-  width: 630px;
-  height: 630px;
+  right: 0;
+  width: 574px;
+  height: 574px;
   margin: auto;
   border-radius: 50%;
   overflow: hidden;
@@ -255,6 +264,29 @@ export default {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+.footer-wrapper {
+  position: absolute;
+  left: 36px;
+  right: 0;
+  bottom: 0;
+  height: 410px;
+  border: 1px solid red;
+  padding-right: 216px;
+}
+.enter-list-item {
+  color: white;
+  font-size: 24px;
+  line-height: 44px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  & img {
+    vertical-align: middle;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+  }
 }
 </style>
 <style lang='less' scoped>
