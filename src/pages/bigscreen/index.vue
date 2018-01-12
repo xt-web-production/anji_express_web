@@ -29,15 +29,13 @@
   </div>
 
   <div class="enter-wrapper">
-    <transition-group name="enter-list-complete" tag="div">
-      <span
-        v-for="item in enterItems"
-        v-bind:key="item"
-        class="enter-list-complete"
-      >
-        {{ item.name }}
-      </span>
-    </transition-group>
+    <p
+      v-for="item,index in currentEnterItems"
+      :key="'enter' + index"
+      class="enter-list-complete"
+    >
+      {{ item.name }}
+    </p>
   </div>
 
   <svg style="display: none" x="0px" y="0px" width="1072" height="1024" viewBox="0 0 1024 1024" xmlns="">
@@ -88,7 +86,6 @@ export default {
       this.itemType = val.id
     })
     socket.on('userEnter', function(data) {
-      console.log(data.data);
       that.enterItems.push(data.data)
     })
     socket.on('gift', function(data) {
@@ -133,6 +130,9 @@ export default {
     ...mapState(['userInfo']),
     currentGiftId(){
       return this.currentGiftItem ? this.currentGiftItem.gift : 0
+    },
+    currentEnterItems(){
+      return this.enterItems.slice(0,5)
     }
   },
   methods: {
@@ -149,9 +149,7 @@ export default {
     // 登录滚动动画
     initIntervalEnter(){
       this.setInterEnter = setInterval(()=>{
-             setTimeout(()=>{
-               this.enterItems.splice(0,1)
-             }, 500)
+             this.enterItems.splice(0,1)
            },2000);
     },
     initSetItemType(val) {
@@ -195,7 +193,7 @@ export default {
   background-repeat: no-repeat;
   position: relative;
   padding: 64px 0;
-  background-image: none !important;
+  // /background-image: none !important;
 }
 
 .logo-wrapper {
@@ -260,16 +258,10 @@ export default {
 }
 </style>
 <style lang='less' scoped>
-.gift-list-complete-enter, .gift-list-complete-leave-to
-/* .gift-list-complete-leave-active for below version 2.1.8 */ {
+.gift-list-complete-enter, .gift-list-complete-leave-to {
   opacity: 0;
   transform: translateX(200px);
 }
-// .gift-list-complete-leave
-// /* .gift-list-complete-leave-active for below version 2.1.8 */ {
-//   opacity: 0;
-//   transform: translateX(-200px);
-// }
 .gift-list-complete-leave-active {
   opacity: 0;
   transform: translateX(-200px);
