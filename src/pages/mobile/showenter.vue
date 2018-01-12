@@ -32,7 +32,7 @@ export default {
         if (res.code == -1) {
           throw res
         }
-        this.$router.push('mobile')
+        // this.$router.push('mobile')
       }).catch(()=>{
         this.$MessageBox('提示:', '表演还没开始,请稍等！');
       })

@@ -28,6 +28,18 @@
     </transition>
   </div>
 
+  <div class="enter-wrapper">
+    <transition-group name="enter-list-complete" tag="div">
+      <span
+        v-for="item in enterItems"
+        v-bind:key="item"
+        class="enter-list-complete"
+      >
+        {{ item.name }}
+      </span>
+    </transition-group>
+  </div>
+
   <svg style="display: none" x="0px" y="0px" width="1072" height="1024" viewBox="0 0 1024 1024" xmlns="">
        <!-- 生日提醒 -->
        <g id='msg-icon'>
@@ -51,7 +63,8 @@ export default {
   data() {
     return {
       currentGiftItem: null,
-      giftItems: [],
+      giftItems: [], // 获取礼物列表
+      enterItems: [], //用户登录列表
       itemType: 1,
       msg: 'Welcome to Your Vue.js App',
       componentName: 'textitem',
@@ -74,8 +87,9 @@ export default {
     socket.on('screen', function(val) {
       this.itemType = val.id
     })
-    socket.on('userEnter', function(val) {
-      console.log(val);
+    socket.on('userEnter', function(data) {
+      console.log(data.data);
+      that.enterItems.push(data.data)
     })
     socket.on('gift', function(data) {
       that.giftItems.push(data)
@@ -102,6 +116,17 @@ export default {
           this.setInterGift = null
         }
       }
+    },
+    // 监听动态显示礼物
+    enterItems(val){
+      if (val.length) {
+          !this.setInterEnter && this.initIntervalEnter()
+      } else {
+        if (this.setInterEnter) {
+          clearInterval(this.setInterEnter)
+          this.setInterEnter = null
+        }
+      }
     }
   },
   computed: {
@@ -111,12 +136,21 @@ export default {
     }
   },
   methods: {
+    // 礼物滚动动画
     initIntervalGift(){
       this.setInterGift = setInterval(()=>{
              this.currentGiftItem = null
              setTimeout(()=>{
                this.currentGiftItem = this.giftItems[0]
                this.giftItems.splice(0,1)
+             }, 500)
+           },2000);
+    },
+    // 登录滚动动画
+    initIntervalEnter(){
+      this.setInterEnter = setInterval(()=>{
+             setTimeout(()=>{
+               this.enterItems.splice(0,1)
              }, 500)
            },2000);
     },
@@ -161,7 +195,7 @@ export default {
   background-repeat: no-repeat;
   position: relative;
   padding: 64px 0;
-  // background-image: none !important;
+  background-image: none !important;
 }
 
 .logo-wrapper {
