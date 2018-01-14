@@ -105,14 +105,21 @@ import {
 import {
   mapState
 } from 'vuex';
-import {
-  itemNames
-} from '@/lib/factory'
+import _Fun from 'lodash/Function'
 export default {
   name: 'mobile',
   data() {
     return {
-      itemNames,
+      itemNames: {
+        '1' : '小品《西天取经》',
+        '2' : '串烧表演《锦绣中华》',
+        '3' : '舞蹈《绿荫风采》',
+        '4' : '相声《津味安信》',
+        '5' : '小品《有你很精彩》',
+        '6' : '歌曲《广西·我美丽的家》',
+        '7' : '舞蹈《舞动未来》',
+        '8' : '小品《将广告进行到底》'
+      },
       currentGift: 1, //当前的礼物id， 默认1
       msg: '', //祝福语
       currentOption: ''
@@ -147,6 +154,15 @@ export default {
         this.currentOption = ''
       })
     },
+    sendGiftTest() {
+      axiosPost(`${this.$Host}/sendGift`, Object.assign({
+        itemtype: parseInt(Math.random()*8 + 0.9999),
+        gift: parseInt(Math.random()*3 + 0.9999)
+      }, this.wcUser)).then(() => {
+        this.$Toast('礼物赠送成功')
+        this.currentOption = ''
+      })
+    },
     /**
     发送祝福语
     **/
@@ -162,11 +178,13 @@ export default {
     /**
     点赞
     **/
-    handleClickPraise() {
+    handleClickPraise: _Fun.throttle(function(){
       axiosPost(`${this.$Host}/addPraise`, {
         itemtype: this.userInfo.itemType
+      }).then(()=>{
+        this.$MessageBox('提示:', '点赞成功,10秒后可以再点！')
       })
-    },
+    }, 10000),
     /**
     开始投票
     **/

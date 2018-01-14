@@ -5,7 +5,7 @@
   </div>
   <div :class="$style['text-wrapper']">
     <div ref='text-slider' id='text-slider' style="z-index:10;text-align:right;white-space: nowrap;position: relative;">
-      <textitem :name='item.name' :text='item.text' :id='item.id' :style='`top:${item.top * 120}px`' @onSlideEnd='onSlideEnd' v-for='item,index in textItems' :key="'text' + index" />
+      <textitem :name='item.name' :text='item.text' :itemIndex='item.index' :style='`top:${item.top * 120}px`' @onSlideEnd='onSlideEnd' v-for='item,index in textItems' :key="'text' + index" />
     </div>
     <div :class="$style['img-box']" v-show='currentGiftId'>
       <img src="./bggift1.jpg" alt="" v-show='currentGiftId == 1'>
@@ -40,6 +40,11 @@
         <span style='color: #dcbe4a'>进入了直播间</span>
       </p>
     </div>
+    <div :class="$style['praise-wrapper']" :style="'background-image: url(' + require('./parise.png') + ');'">
+      <span>
+        {{praise > 999 ? 999 : praise}}
+      </span>
+    </div>
   </div>
 
 
@@ -61,29 +66,40 @@ import _Fun from 'lodash/Function';
 import textitem from './text-item.vue'
 import axios from 'axios';
 import io from 'socket.io-client';
+import storage from '@/lib/storagejs'
 export default {
-  name: 'HelloWorld',
+  name: 'bigscreen',
   data() {
     return {
-      currentGiftItem: {
-        name: '1231313',
-        img: './gift.png',
-        gift: 1
+      itemNames: {
+        1 : '小品《西天取经》',
+        2 : '串烧表演《锦绣中华》',
+        3 : '舞蹈《绿荫风采》',
+        4 : '相声《津味安信》',
+        5 : '小品《有你很精彩》',
+        6 : '歌曲《广西·我美丽的家》',
+        7 : '舞蹈《舞动未来》',
+        8 : '小品《将广告进行到底》'
       },
+      currentGiftItem: null,
       giftItems: [], // 获取礼物列表
       enterItems: [], //用户登录列表
+      praise: 0, //点赞数
       itemType: 1,
       msg: 'Welcome to Your Vue.js App',
       componentName: 'textitem',
-      textItems: [{
-        name: '安吉物流公众号',
-        id: 1,
-        text: '欢迎大家参加联欢晚会',
-        top: 0
-      }]
+      textItems: []
     }
   },
   created() {
+    this.textItems = [{
+      name: '当前节目',
+      id: 1,
+      text: this.itemNames[this.itemType],
+      top: 0,
+      index:0
+    }]
+
     const that = this
     const socket = io(this.$SocketHost);
     socket.on('connect', function(val) {
@@ -91,24 +107,55 @@ export default {
         customId: '000CustomIdHere0000'
       });
     })
+    // 更换节目
     socket.on('screen', function(val) {
-      this.itemType = val.id
+      if (val.id == that.itemType) return
+
+      // 记录当前的点赞数
+      storage.set(`praise${that.itemType}`, that.praise)
+      that.praise = storage.get(`praise${val.id}`) || 0
+
+      const itemType = val.id
+      that.itemType = itemType
+      that.textItems.push({
+        name: '当前节目',
+        id: 1,
+        text: that.itemNames[itemType],
+        top: 0,
+        index:0
+      })
+      // 礼物列表清零
+      that.giftItems = []
+       // 情况祝福语
+      that.textItems = []
+
     })
+    // 用户登录
     socket.on('userEnter', function(data) {
+      console.log(data);
       that.enterItems.push(data.data)
     })
+    // 礼物
     socket.on('gift', function(data) {
       that.giftItems.push(data)
     })
+    // 祝福语
     socket.on('text', function(data) {
       const preTop = that.textItems[that.textItems.length - 1] == undefined ? 0 : that.textItems[that.textItems.length - 1].top
+      const _preIndex = that.textItems[that.textItems.length - 1] == undefined ? 0 : that.textItems[that.textItems.length - 1].index
       const top = preTop < 3 ? preTop + 1 : 0
+      const index = _preIndex + 1
       that.textItems.push({
         name: data.name,
         id: data.id,
         text: data.text,
-        top
+        top,
+        index
       })
+    })
+    // 点赞
+    socket.on('praise', function() {
+      that.praise++
     })
   },
   watch: {
@@ -161,30 +208,11 @@ export default {
              this.enterItems.splice(0,1)
            },2000);
     },
-    initSetItemType(val) {
-      axios.post(`${this.$Host}/queryCurrentItemType`).then(res => {
-        const currentItemType = res.data.data.currentItemType
-        this.itemType = currentItemType
-      })
-    },
-    handleChangeScreen(id) {
-      axios.post(`${this.$Host}/changeScreen`, {
-        id
-      })
-    },
-    //定时器获取点赞数
-    queryPraise(itemtype) {
-      const that = this
-      this.intervalQueryPraise = setInterval(function() {
-        axios.post(`${that.$Host}/queryPraise`, {
-          itemtype: that.itemType
-        })
-      }, 3000);
-    },
-    onSlideEnd(id){
-      _Array.remove(this.textItems, function(item) {
-        return item.id == id;
-      });
+    // 当祝福语弹幕消失之前回调
+    onSlideEnd(itemIndex){
+      if(itemIndex > 200) {
+        this.textItems = []
+      }
     }
   },
   components: {
@@ -216,7 +244,6 @@ export default {
 .text-wrapper {
   position: relative;
   height: 574px;
-  border: 1px solid red;
   margin-top: 110px;
   padding-top: 78px;
 }
@@ -271,7 +298,6 @@ export default {
   right: 0;
   bottom: 0;
   height: 410px;
-  border: 1px solid red;
   padding-right: 216px;
 }
 .enter-list-item {
@@ -286,6 +312,28 @@ export default {
     width: 44px;
     height: 44px;
     border-radius: 50%;
+  }
+}
+.praise-wrapper {
+  width: 171px;
+  height: 171px;
+  position: absolute;
+  right: 36px;
+  bottom: 78px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  & span {
+    position: absolute;
+    background-color: #dcbe4a;
+    bottom: 6px;
+    right: 4px;
+    width: 46px;
+    height: 46px;
+    line-height: 46px;
+    border-radius: 50%;
+    font-size: 22.5px;
+    color :white;
   }
 }
 </style>

@@ -58,13 +58,11 @@ export default {
   methods: {
     handleChangeTicket(val){
       this.currentSelectId = val
-      console.log(val);
     },
     handleCLickTick(){
       if (!this.currentSelectId) return
       axiosPost(`${this.$Host}/isAllowMobileSendTicket`, Object.assign({itemType: this.currentSelectId}, this.wcUser)).then(res=> {
         const count = res.data
-        console.log(count);
         if (count) {
           throw res
         } else {

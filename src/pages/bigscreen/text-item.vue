@@ -11,7 +11,7 @@ export default {
   data(){
     return {
       translateX:'100%',
-      duration: [7,8,9,7][parseInt(Math.random() * 3 )]
+      duration: 15
     }
   },
   props: {
@@ -23,7 +23,7 @@ export default {
       default: 'text',
       type: String
     },
-    id: {
+    itemIndex: {
       default: 0,
       type: Number
     }
@@ -36,14 +36,14 @@ export default {
     item_translateX(){
       var offsetWidth = this.$refs['text-item'].offsetWidth
       setTimeout(()=>{
-        this.translateX = (offsetWidth + 883) * -1 + 'px'
+        this.translateX = (offsetWidth + 833) * -1 + 'px'
       }, 500)
     },
     item_destroy(){
       const time = this.duration
       setTimeout(()=>{
+        this.$emit('onSlideEnd', this.itemIndex)
         this.$destroy()
-        this.$emit('onSlideEnd', this.id)
       }, time * 500)
     }
   },
