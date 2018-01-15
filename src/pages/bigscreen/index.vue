@@ -232,7 +232,6 @@ export default {
   padding: 64px 0;
   // /background-image: none !important;
 }
-
 .logo-wrapper {
   height: 42px;
   margin-bottom: 12px;
@@ -240,7 +239,6 @@ export default {
   text-align: left;
   position: relative;
 }
-
 .text-wrapper {
   position: relative;
   height: 574px;

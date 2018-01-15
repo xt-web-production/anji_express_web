@@ -6,6 +6,10 @@ import mobile from '@/pages/mobile/mobile'
 import ticket from '@/pages/mobile/ticket'
 import control from '@/pages/control'
 import bigscreen from '@/pages/bigscreen'
+import bigscreenTicket from '@/pages/bigscreen/bigscreenTicket'
+import subitem1 from '@/pages/bigscreen/subitem1'
+import subitem2 from '@/pages/bigscreen/subitem2'
+import subitem3 from '@/pages/bigscreen/subitem3'
 
 Vue.use(Router)
 
@@ -42,6 +46,28 @@ export default new Router({
       path: '/bigscreen',
       name: 'bigscreen',
       component: bigscreen
+    },
+    {
+      path: '/bigscreenTicket',
+      name: 'bigscreenTicket',
+      component: bigscreenTicket,
+      children: [
+        {
+          path: 'subitem1',
+          name: 'subitem1',
+          component: subitem1
+        },
+        {
+          path: 'subitem2',
+          name: 'subitem2',
+          component: subitem2
+        },
+        {
+          path: 'subitem3',
+          name: 'subitem3',
+          component: subitem3
+        }
+      ]
     }
   ]
 })
