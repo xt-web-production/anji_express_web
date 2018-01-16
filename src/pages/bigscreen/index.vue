@@ -210,7 +210,7 @@ export default {
     },
     // 当祝福语弹幕消失之前回调
     onSlideEnd(itemIndex){
-      if(itemIndex > 200) {
+      if (itemIndex > 200) {
         this.textItems = []
       }
     }

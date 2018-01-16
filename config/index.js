@@ -13,7 +13,7 @@ module.exports = {
     proxyTable: {
   // proxy all requests starting with /api to jsonplaceholder
     '/api': {
-        target: 'http://127.0.0.1:8009', //http://192.168.1.161:8083 http://192.168.100.172:8080
+        target: 'http://localhost:8009', //http://192.168.1.161:8083 http://192.168.100.172:8080
         /*  target: 'http://192.168.40.248:8084',*/
         changeOrigin: true,
         pathRewrite: { //需要rewrite重写的, 如果在服务器端做了处理则可以不要这段
@@ -71,7 +71,7 @@ module.exports = {
      */
 
 
-    productionSourceMap: true,
+    productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 

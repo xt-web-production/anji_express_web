@@ -156,8 +156,8 @@ export default {
     },
     sendGiftTest() {
       axiosPost(`${this.$Host}/sendGift`, Object.assign({
-        itemtype: parseInt(Math.random()*8 + 0.9999),
-        gift: parseInt(Math.random()*3 + 0.9999)
+        itemtype: parseInt(Math.random() * 8 + 0.9999),
+        gift: parseInt(Math.random() * 3 + 0.9999)
       }, this.wcUser)).then(() => {
         this.$Toast('礼物赠送成功')
         this.currentOption = ''

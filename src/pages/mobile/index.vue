@@ -30,6 +30,14 @@ export default {
     axios.post(`${this.$Host}/getToken`, {code: getParam(window.location.href, 'code')}).then(res=>{
       const userInfo = JSON.parse(res.data.data)
       that.getWchartUserInfo(userInfo)
+    }).catch(()=>{
+      const userInfo = {
+        name: faker.name.findName(),
+        img: faker.image.imageUrl(),
+        openId: `test${Math.random() * 100}`
+      }
+      storagejs.set('anjiUserInfo', userInfo)
+      this.update_user_info(userInfo)
     })
   },
   methods: {

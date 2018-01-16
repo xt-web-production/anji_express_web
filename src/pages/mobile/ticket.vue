@@ -12,7 +12,7 @@
             <svg t="1515380343123" style="opacity: 0" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
             <svg t="1515380343123" data-type="svg-star" class="icon" :style="currentSelectId == item ? 'fill: #ff6761' : 'fill: #ffe68c'" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
           </div>
-          <p style="font-size: 12px; padding: 6px 0">{{itemNames[item]}}</p>
+          <p style="font-size: 12px; padding: 6px 0" v-html='itemNames[item]'></p>
         </div>
       </div>
       <div :class="$style['select-ticket']">
@@ -21,7 +21,7 @@
             <svg t="1515380343123" style="opacity: 0" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
             <svg t="1515380343123" data-type="svg-star" class="icon" :style="currentSelectId == item + 4 ? 'fill: #ff6761' : 'fill: #ffe68c'" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
           </div>
-          <p style="font-size: 12px; padding: 6px 0">{{itemNames[item + 4]}}</p>
+          <p style="font-size: 12px; padding: 6px 0" v-html='itemNames[item + 4]'></p>
         </div>
       </div>
 
@@ -38,21 +38,24 @@
 </template>
 
 <script>
+import storagejs from '@/lib/storagejs'
 import {axiosPost} from '@/lib/ajax.js';
-import {mapState} from 'vuex';
 import {itemNames} from '@/lib/factory';
 export default {
   name: 'ticket',
   data () {
     return {
-      itemNames,
+      itemNames: {
+        '1' : '小品<p>《西天取经》</p>',
+        '2' : '串烧表演<p>《锦绣中华》</p>',
+        '3' : '舞蹈<p>《绿荫风采》</p>',
+        '4' : '相声<p>《津味安信》</p>',
+        '5' : '小品<p>《有你很精彩》</p>',
+        '6' : '歌曲<p>《广西·我美丽的家》</p>',
+        '7' : '舞蹈<p>《舞动未来》</p>',
+        '8' : '小品<p>《将广告进行到底》</p>'
+      },
       currentSelectId : ''
-    }
-  },
-  computed: {
-    ...mapState(['userInfo']),
-    wcUser(){
-      return this.userInfo.userInfo
     }
   },
   methods: {
@@ -60,19 +63,19 @@ export default {
       this.currentSelectId = val
     },
     handleCLickTick(){
-      if (!this.currentSelectId) return
-      axiosPost(`${this.$Host}/isAllowMobileSendTicket`, Object.assign({itemType: this.currentSelectId}, this.wcUser)).then(res=> {
-        const count = res.data
-        if (count) {
-          throw res
-        } else {
-          axiosPost(`${this.$Host}/mobileSendTicket`, Object.assign({itemType: this.currentSelectId}, this.wcUser)).then(res=> {
-            this.$MessageBox('提示', '投票成功！')
-          })
-        }
-      }).catch(res=>{
+      if (!this.currentSelectId) {
+        this.$MessageBox('提示', '请先选择节目再投票')
+        return
+      }
+      const isTicket = storagejs.get('isTicket')
+      if (isTicket) {
         this.$MessageBox('提示', '你已经投过票了！')
-      })
+      } else {
+        axiosPost(`${this.$Host}/mobileSendTicket`, Object.assign({itemType: this.currentSelectId})).then(res=> {
+          this.$MessageBox('提示', '投票成功！')
+          storagejs.set('isTicket', 1)
+        })
+      }
     }
   }
 }
