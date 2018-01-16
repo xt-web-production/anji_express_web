@@ -18,13 +18,12 @@
     </div>
     <h2> -----场景控制----- </h2>
     <div class="ticket-control-wrapper">
-      <button @click="handleStartTicket">年会直播</button>
-      <button @click="handleStartTicket">投票大屏显示二维码</button>
+      <button @click="handleBigScreenPage('bigscreendefault')">年会直播</button>
+      <button @click="handleBigScreenPage('subitem1')">投票规则</button>
+      <button @click="handleBigScreenPage('subitem2')">投票中</button>
+      <button @click="handleBigScreenPage('subitem3')">投票结果</button>
       <button @click="handleStartTicket">开始投票</button>
       <button @click="handleStopTicket">停止投票</button>
-      <button @click="handleStopTicket">投票规则</button>
-      <button @click="handleStopTicket">投票中</button>
-      <button @click="handleStopTicket">投票结果</button>
     </div>
 
     <h2> -----弹幕管理----- </h2>
@@ -128,6 +127,11 @@ export default {
   handleSendtext(item){
     item.allowsend = 0
     axiosPost(`${this.$Host}/sendText`, item)
+  },
+
+  //切换大屏的显示内容
+  handleBigScreenPage(routeName){
+    axiosPost(`${this.$Host}/changeBigPage`, {routeName})
   }
 }
 }

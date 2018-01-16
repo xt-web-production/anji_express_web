@@ -6,7 +6,7 @@ import mobile from '@/pages/mobile/mobile'
 import ticket from '@/pages/mobile/ticket'
 import control from '@/pages/control'
 import bigscreen from '@/pages/bigscreen'
-import bigscreenTicket from '@/pages/bigscreen/bigscreenTicket'
+import bigscreendefault from '@/pages/bigscreen/default'
 import subitem1 from '@/pages/bigscreen/subitem1'
 import subitem2 from '@/pages/bigscreen/subitem2'
 import subitem3 from '@/pages/bigscreen/subitem3'
@@ -45,13 +45,13 @@ export default new Router({
     {
       path: '/bigscreen',
       name: 'bigscreen',
-      component: bigscreen
-    },
-    {
-      path: '/bigscreenTicket',
-      name: 'bigscreenTicket',
-      component: bigscreenTicket,
+      component: bigscreen,
       children: [
+        {
+          path: '',
+          name: 'bigscreendefault',
+          component: bigscreendefault
+        },
         {
           path: 'subitem1',
           name: 'subitem1',
