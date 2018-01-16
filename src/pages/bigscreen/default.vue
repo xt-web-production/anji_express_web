@@ -88,17 +88,17 @@ export default {
       itemType: 1,
       msg: 'Welcome to Your Vue.js App',
       componentName: 'textitem',
-      textItems: []
+      textItems: [{
+        name: '安吉物流',
+        id: 1,
+        text: '祝贺大家新年快乐！',
+        top: 0,
+        index:0
+      }]
     }
   },
   created() {
-    this.textItems = [{
-      name: '当前节目',
-      id: 1,
-      text: this.itemNames[this.itemType],
-      top: 0,
-      index:0
-    }]
+
 
     const that = this
     const socket = io(this.$SocketHost);
@@ -117,13 +117,6 @@ export default {
 
       const itemType = val.id
       that.itemType = itemType
-      that.textItems.push({
-        name: '当前节目',
-        id: 1,
-        text: that.itemNames[itemType],
-        top: 0,
-        index:0
-      })
       // 礼物列表清零
       that.giftItems = []
        // 情况祝福语
@@ -132,7 +125,6 @@ export default {
     })
     // 用户登录
     socket.on('userEnter', function(data) {
-      console.log(data);
       that.enterItems.push(data.data)
     })
     // 礼物
@@ -214,6 +206,10 @@ export default {
         this.textItems = []
       }
     }
+  },
+  beforeDestroy(){
+    clearInterval(this.setInterGift)
+    clearInterval(this.setInterEnter)
   },
   components: {
     textitem

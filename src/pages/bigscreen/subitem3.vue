@@ -6,22 +6,22 @@
     <p style="color: white; margin-top:72px; font-size:31px">安吉物流2018新春团拜会</p>
     <p style='padding: 52px 0 42px; 0'><img src='./subitem3_1.png'/></p>
     <div style="padding: 0 100px;">
-      <div :class="$style['ticket-block']" v-for='item in 8'>
-        <img data-type='first-img' :src="require('./subitem3_2.png')" alt="">
-        <img data-type='num-img' :src="require('./num1.png')" alt="">
-        <p :class="$style['ticket-block-title']">战队名称 <span style="color: #dcbe4a; margin-left:12px">{{itemNames[1]}}</span><span :class="$style.ticketVal">
-          123<span style="margin-left: 12px">点</span>
+      <div :class="$style['ticket-block']" v-for='item,index in itemDatas' :style='bgcolor(index)'>
+        <img data-type='first-img' :src="require('./subitem3_2.png')" v-if='index == 0'>
+        <img data-type='num-img' :src="require(`./num${index + 1}.png`)" alt="">
+        <p :class="$style['ticket-block-title']">{{item.teamName}} <span style="color: #dcbe4a; margin-left:12px">{{item.name}}</span><span :class="$style.ticketVal">
+          {{item.num}}<span style="margin-left: 12px">点</span>
         </span></p>
         <div :class="$style['ticket-item']">
           <div :class="$style.progressWrapper">
-            <div data-type='progressbar' style="width:20%">
+            <div data-type='progressbar' :style="'width:' + item.preGift + '%'">
             </div>
-            <p style="margin-top: 4px; font-size:14px">礼物数<span>123</span></p>
+            <p style="margin-top: 4px; font-size:14px">礼物数<span style="margin-left: 8px">{{item.gift}}</span></p>
           </div>
           <div :class="$style.progressWrapper">
-            <div data-type='progressbar' style="width:20%">
+            <div data-type='progressbar' :style="'width:' + item.preCount + '%'">
             </div>
-            <p style="margin-top: 4px; font-size:14px">投票数<span>123</span></p>
+            <p style="margin-top: 4px; font-size:14px">投票数<span style="margin-left: 8px">{{item.count}}</span></p>
           </div>
         </div>
       </div>
@@ -30,9 +30,15 @@
 </template>
 
 <script>
+import {
+  axiosPost
+} from '@/lib/ajax.js';
+import _Math from 'lodash/Math'
+import _Collection from 'lodash/Collection'
 export default {
   data(){
     return {
+      itemDatas: [],
       itemNames: {
         '1' : '小品《西天取经》',
         '2' : '串烧表演《锦绣中华》',
@@ -43,7 +49,51 @@ export default {
         '7' : '舞蹈《舞动未来》',
         '8' : '小品《将广告进行到底》'
       },
+      teamNames: {
+        '1' : '战队1',
+        '2' : '战队1',
+        '3' : '战队2',
+        '4' : '战队2',
+        '5' : '战队3',
+        '6' : '战队3',
+        '7' : '战队4',
+        '8' : '战队4'
+      }
     }
+  },
+  created(){
+    this.queryResultTickets()
+    this.Interval = setInterval(this.queryResultTickets,10000);
+  },
+  methods: {
+    bgcolor(val){
+      const alpha = (1 - val/5) < 0.2 ? 0.2 : 1 - val/5
+      return `background-color: rgba(98,78,17, ${alpha})`
+    },
+    queryResultTickets(){
+      axiosPost(`${this.$Host}/queryResultTickets`).then(res=> {
+        const allCount = _Math.sum(res.data, 'count') || 1
+        const allGift = _Math.sum(res.data, 'gift') || 1
+        const itemDatas = res.data.map(item=>{
+          return {
+            id: item.id,
+            count: item.count,
+            gift: item.gift,
+            num: item.count * 2 + item.gift,
+            preCount: item.count * 100 / allCount,
+            preGift: item.gift * 100 / allGift,
+            name: this.itemNames[item.id],
+            teamName: this.teamNames[item.id]
+          }
+        })
+
+        const _itemDatas = _Collection.sortBy(itemDatas, 'num')
+        this.itemDatas = _itemDatas.reverse();
+      })
+    }
+  },
+  beforeDestroy(){
+    clearInterval(this.Interval)
   }
 }
 </script>
@@ -68,7 +118,6 @@ export default {
 .ticket-block {
   font-size: 20px;
   position: relative;
-  background-color: rgba(115,110,41,0.2);
   border-radius: 8px;
   color: white;
   padding: 18px 32px;

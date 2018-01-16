@@ -2,14 +2,14 @@
   <div class="control-wrapper">
     <h2> -----节目切换----- </h2>
     <div class="item-types-wrapper">
-      <button @click="handleChangeScreen(1)">screen1</button>
-      <button @click="handleChangeScreen(2)">screen2</button>
-      <button @click="handleChangeScreen(3)">screen3</button>
-      <button @click="handleChangeScreen(4)">screen4</button>
-      <button @click="handleChangeScreen(5)">screen5</button>
-      <button @click="handleChangeScreen(6)">screen6</button>
-      <button @click="handleChangeScreen(7)">screen7</button>
-      <button @click="handleChangeScreen(8)">screen8</button>
+      <button @click="handleChangeScreen(1)">1 - 小品《西天取经》</button>
+      <button @click="handleChangeScreen(2)">2 - 串烧表演《锦绣中华》</button>
+      <button @click="handleChangeScreen(3)">3 - 舞蹈《绿荫风采》</button>
+      <button @click="handleChangeScreen(4)">4 - 相声《津味安信》</button>
+      <button @click="handleChangeScreen(5)">5 - 小品《有你很精彩》</button>
+      <button @click="handleChangeScreen(6)">6 - 歌曲《广西·我美丽的家》</button>
+      <button @click="handleChangeScreen(7)">7 - 舞蹈《舞动未来》</button>
+      <button @click="handleChangeScreen(8)">8 - 小品《将广告进行到底》</button>
     </div>
     <h2> -----直播控制----- </h2>
     <div class="player-control-wrapper">

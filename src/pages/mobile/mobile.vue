@@ -26,7 +26,6 @@
             <div data-type="gift-button" @click="handleClickOpenGift(1)">
               赠送
             </div>
-            <p @click='sendGift'>test</p>
           </div>
           <div data-type="gift-item">
             <div data-type="gift-img">
@@ -149,15 +148,6 @@ export default {
       axiosPost(`${this.$Host}/sendGift`, Object.assign({
         itemtype: this.userInfo.itemType,
         gift: this.currentGift
-      }, this.wcUser)).then(() => {
-        this.$Toast('礼物赠送成功')
-        this.currentOption = ''
-      })
-    },
-    sendGiftTest() {
-      axiosPost(`${this.$Host}/sendGift`, Object.assign({
-        itemtype: parseInt(Math.random() * 8 + 0.9999),
-        gift: parseInt(Math.random() * 3 + 0.9999)
       }, this.wcUser)).then(() => {
         this.$Toast('礼物赠送成功')
         this.currentOption = ''
