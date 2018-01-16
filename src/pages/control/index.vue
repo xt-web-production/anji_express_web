@@ -88,11 +88,11 @@ export default {
   },
   //开始投票
   handleStartTicket(){
-    axiosPost(`${this.$Host}/startTicket`)
+    axiosPost(`${this.$Host}/allowStartTicket`)
   },
   //停止投票
   handleStopTicket(){
-    axiosPost(`${this.$Host}/endTicket`)
+    axiosPost(`${this.$Host}/allowEndTicket`)
   },
   //翻页
   getQueryTextListsByPage(){

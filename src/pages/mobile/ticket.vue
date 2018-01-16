@@ -71,9 +71,18 @@ export default {
       if (isTicket) {
         this.$MessageBox('提示', '你已经投过票了！')
       } else {
-        axiosPost(`${this.$Host}/mobileSendTicket`, Object.assign({itemType: this.currentSelectId})).then(res=> {
-          this.$MessageBox('提示', '投票成功！')
-          storagejs.set('isTicket', 1)
+        axiosPost(`${this.$Host}/searchIsTicket`).then(res=> {
+          const isallowTicket = res.data.allowTicket
+          if (isallowTicket) {
+            axiosPost(`${this.$Host}/mobileSendTicket`, Object.assign({itemType: this.currentSelectId})).then(res=> {
+              this.$MessageBox('提示', '投票成功！')
+              storagejs.set('isTicket', 1)
+            })
+          } else {
+            throw res
+          }
+        }).catch(()=>{
+          this.$MessageBox('提示', '投票通道已经关闭')
         })
       }
     }
