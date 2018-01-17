@@ -13,6 +13,7 @@ export default {
     const socket = io(this.$SocketHost);
     const that = this
     socket.on('connect', function(val) {
+      console.log('connect socket server');
       socket.emit('bigCustomSocket', {
         customId: 'bigCustomSocket'
       });
