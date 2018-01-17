@@ -63,7 +63,6 @@ export default {
   },
   created(){
     this.queryResultTickets()
-    this.Interval = setInterval(this.queryResultTickets,10000);
   },
   methods: {
     bgcolor(val){
@@ -86,14 +85,10 @@ export default {
             teamName: this.teamNames[item.id]
           }
         })
-
         const _itemDatas = _Collection.sortBy(itemDatas, 'num')
         this.itemDatas = _itemDatas.reverse();
       })
     }
-  },
-  beforeDestroy(){
-    clearInterval(this.Interval)
   }
 }
 </script>

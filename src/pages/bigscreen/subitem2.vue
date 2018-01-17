@@ -136,7 +136,7 @@ export default {
   },
   created(){
     this.queryResultTickets()
-    this.Interval = setInterval(this.queryResultTickets,10000);
+    this.Interval = setInterval(this.queryResultTickets,3000);
   },
   methods: {
     queryResultTickets(){
