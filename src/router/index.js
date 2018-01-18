@@ -10,6 +10,7 @@ import bigscreendefault from '@/pages/bigscreen/default'
 import subitem1 from '@/pages/bigscreen/subitem1'
 import subitem2 from '@/pages/bigscreen/subitem2'
 import subitem3 from '@/pages/bigscreen/subitem3'
+import clearCookie from '@/pages/clearCookie'
 
 Vue.use(Router)
 
@@ -68,6 +69,11 @@ export default new Router({
           component: subitem3
         }
       ]
+    },
+    {
+      path: '/clearCookie',
+      name: 'clearCookie',
+      component: clearCookie
     }
   ]
 })
