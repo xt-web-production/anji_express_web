@@ -6,6 +6,11 @@
     <p style="padding: 24px 0">请点击下面图标</p>
     <p style="padding-bottom: 24px; font-size:28px;color:#ffe68c;font-weight:bold">为喜爱的节目投票吧</p>
     <div :class="$style['ticket-send-wrapper']">
+      <p style="margin-bottom: 6px;color: #b69c46">
+          <span style="display:inline-block; width: 50%; float:left">战队名称</span>
+          <span style="display:inline-block; width: 50%">战队名称</span>
+      </p>
+
       <div :class="$style['select-ticket']">
         <div data-type="ticket-item" v-for='item in 4' @click='handleChangeTicket(item)'>
           <div data-type="star">
@@ -15,6 +20,11 @@
           <p style="font-size: 12px; padding: 6px 0" v-html='itemNames[item]'></p>
         </div>
       </div>
+
+      <p style="margin-bottom: 6px;color: #b69c46">
+          <span style="display:inline-block; width: 50%; float:left">战队名称</span>
+          <span style="display:inline-block; width: 50%">战队名称</span>
+      </p>
       <div :class="$style['select-ticket']">
         <div data-type="ticket-item" v-for='item in 4' @click='currentSelectId = item + 4'>
           <div data-type="star">
@@ -24,14 +34,13 @@
           <p style="font-size: 12px; padding: 6px 0" v-html='itemNames[item + 4]'></p>
         </div>
       </div>
-
-      <div :class="$style['send-buttons']" class='send-buttons'>
-        <div data-type='send-button-item' style="padding-right:6px" @click='handleCLickTick'>
-          <p>确定</p>
-        </div>
-        <div data-type='send-button-item' style="padding-right:6px" @click="$router.push('/')">
-          <p>返回直播间</p>
-        </div>
+    </div>
+    <div :class="$style['send-buttons']" class='send-buttons'>
+      <div data-type='send-button-item' style="float: left;" @click='handleCLickTick'>
+        <p>确定</p>
+      </div>
+      <div data-type='send-button-item' style="float: right;" @click="$router.push('/')">
+        <p>返回直播间</p>
       </div>
     </div>
   </div>
@@ -107,8 +116,9 @@ export default {
   }
 }
 .ticket-send-wrapper {
-  padding: 24px 8px;
+  padding: 24px 8px 0px 8px;
   border-radius: 10px;
+  margin-bottom: 16px;
   background: linear-gradient(#251f0f, #3b2a0e);
 }
 
@@ -121,7 +131,7 @@ export default {
   & [data-type="ticket-item"] {
     width: 25%;
     padding: 4px;
-    margin-bottom: 18px;
+    margin-bottom: 6px;
     float: left;
   }
   & [data-type="star"] {
@@ -141,15 +151,13 @@ export default {
   }
 }
 .send-buttons {
-  padding: 0 12px;
   &:after {
     content: '';
     clear: both;
     display: table;
   }
   & [data-type='send-button-item'] {
-    width: 50%;
-    float: left;
+    width: 49%;
     & p {
       padding: 6px 0;
       border-radius: 4px;
