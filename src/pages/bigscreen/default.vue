@@ -8,9 +8,9 @@
       <textitem :name='item.name' :text='item.text' :itemIndex='item.index' :style='`top:${item.top * 120}px`' @onSlideEnd='onSlideEnd' v-for='item,index in textItems' :key="'text' + index" />
     </div>
     <div :class="$style['img-box']" v-show='currentGiftId'>
-      <img src="./bggift1.jpg" alt="" v-show='currentGiftId == 1'>
-      <img src="./bggift2.jpg" alt="" v-show='currentGiftId == 2'>
-      <img src="./bggift3.jpg" alt="" v-show='currentGiftId == 3'>
+      <img src="./bggift1.png" alt="" v-show='currentGiftId == 1'>
+      <img src="./bggift2.png" alt="" v-show='currentGiftId == 2'>
+      <img src="./bggift3.png" alt="" v-show='currentGiftId == 3'>
     </div>
   </div>
 
