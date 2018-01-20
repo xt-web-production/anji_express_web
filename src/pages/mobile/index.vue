@@ -6,7 +6,6 @@
 
 <script>
 import axios from 'axios';
-import faker from 'faker';
 import {mapActions} from 'vuex'
 import {getParam} from '@/lib/factory'
 import storagejs from '@/lib/storagejs'
@@ -21,24 +20,7 @@ export default {
     socket.on('screen', function(val) {
       that.update_item_type(val.id)
     })
-
-    const anjiUserInfo = storagejs.get('anjiUserInfo')
-    if (anjiUserInfo) {
-      this.update_user_info(anjiUserInfo)
-      return
-    }
-    axios.post(`${this.$Host}/getToken`, {code: getParam(window.location.href, 'code')}).then(res=>{
-      const userInfo = JSON.parse(res.data.data)
-      that.getWchartUserInfo(userInfo)
-    }).catch(()=>{
-      const userInfo = {
-        name: faker.name.findName(),
-        img: faker.image.imageUrl(),
-        openId: `test${Math.random() * 100}`
-      }
-      storagejs.set('anjiUserInfo', userInfo)
-      this.update_user_info(userInfo)
-    })
+    this.getWchartUserInfo()
   },
   methods: {
     ...mapActions(['update_user_info', 'update_item_type']),
@@ -49,17 +31,36 @@ export default {
       })
     },
     //获取微信用户信息（头像、图片）
-    getWchartUserInfo(item){
-      const name = item.nickname
-      const headimgurl = item.headimgurl
-      const openid = item.openid
-      const userInfo = {
-        name: item.nickname || faker.name.findName(),
-        img: item.headimgurl ? item.headimgurl.replace(/[\\]/g,'') : faker.image.imageUrl(),
-        openId: item.openid || `test${Math.random() * 100}`
+    getWchartUserInfo(){
+      const params = {
+        code: getParam(window.location.href, 'code'),
+        appid: 'wx4dcaf4dca875e624',
+        secret: '07f5aa7ed3a81b824eeb9ad303a277a4',
+        grant_type: 'authorization_code'
       }
-      storagejs.set('anjiUserInfo', userInfo)
-      this.update_user_info(userInfo)
+      axios.get(`${this.$wcApi}/sns/oauth2/access_token`, {
+        params
+      }).then(res=>{
+        const _data = res.data
+        if(JSON.stringify(_data) != '{}') {
+          axios.get(`${this.$wcApi}/sns/userinfo`, {
+            params: {
+              'access_token': _data.access_token,
+              'openid': _data.openid,
+              'lang': 'zh_CN'
+            }
+          }).then(result=>{
+            const userInfo = result.data
+            if(JSON.stringify(userInfo) != '{}'){
+              this.update_user_info({
+                name: userInfo.nickname,
+                img: userInfo.headimgurl,
+                openId: userInfo.openid
+              })
+            }
+          })
+        }
+      })
     }
   }
 }
