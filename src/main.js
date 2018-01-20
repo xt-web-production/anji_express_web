@@ -13,8 +13,8 @@ import 'mint-ui/lib/style.css'
 Vue.prototype.$MessageBox = MessageBox
 Vue.prototype.$Toast = Toast
 Vue.config.productionTip = false
-//Vue.prototype.$SocketHost = 'http://127.0.0.1:8009'
-Vue.prototype.$SocketHost = 'http://118.31.19.0:8009'
+Vue.prototype.$SocketHost = 'http://127.0.0.1:8009'
+//Vue.prototype.$SocketHost = 'http://118.31.19.0:8009'
 Vue.prototype.$Host = '/api'
 Vue.prototype.$wcApi = '/wcApi'
 

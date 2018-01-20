@@ -10,8 +10,9 @@
     <p :class="$style['user-name']">{{wcUser.name}}</p>
   </div>
   <div class="current-item-type">
-    <div :class="$style['current-item']">当前节目:
-      <span style="padding-left: 6px; color: white">{{itemNames[userInfo.itemType]}}</span>
+    <div :class="$style['current-item']">欢饮您:
+      <!-- <span style="padding-left: 6px; color: white">{{itemNames[currentItemType]}}</span> -->
+      <span style="padding-left: 6px; color: white">参加安吉物流新春团拜会</span>
     </div>
   </div>
   <div :class="$style['control-wrapper']">
@@ -20,6 +21,11 @@
         <p style='padding: 14px 0'>礼品赠送区</p>
         <div :class="$style['gift-wrapper']">
           <div data-type="gift-item">
+            <!-- <div data-type="gift-item-bg" v-if="currentGifts[1] != 1">
+              <svg version="1.1" x="0px" y="0px" width="16" height="16" viewBox="0 0 1024 1024">
+                <use xlink:href="#gift-sended"></use>
+              </svg>
+            </div> -->
             <div data-type="gift-img">
               <img src="./gift1.jpg" alt="">
             </div>
@@ -28,6 +34,11 @@
             </div>
           </div>
           <div data-type="gift-item">
+            <!-- <div data-type="gift-item-bg" v-if="currentGifts[2] != 1">
+              <svg version="1.1" x="0px" y="0px" width="16" height="16" viewBox="0 0 1024 1024">
+                <use xlink:href="#gift-sended"></use>
+              </svg>
+            </div> -->
             <div data-type="gift-img">
               <img src="./gift2.jpg" alt="">
             </div>
@@ -36,6 +47,11 @@
             </div>
           </div>
           <div data-type="gift-item">
+            <!-- <div data-type="gift-item-bg" v-if="currentGifts[3] != 1">
+              <svg version="1.1" x="0px" y="0px" width="16" height="16" viewBox="0 0 1024 1024">
+                <use xlink:href="#gift-sended"></use>
+              </svg>
+            </div> -->
             <div data-type="gift-img">
               <img src="./gift3.jpg" alt="">
             </div>
@@ -64,7 +80,7 @@
     <div :class="$style['send-gift-wrapper']" v-if="currentOption == 'gift'">
       <p style="padding: 12px 0;">赠送礼物</p>
       <img :src="currentGiftImg" alt="" style='height: 180px; margin-bottom:6px'>
-      <p style="padding: 12px 0">赠送节目名称：{{itemNames[userInfo.itemType]}}</p>
+      <p style="padding: 12px 0">赠送节目名称：{{itemNames[currentItemType]}}</p>
       <div :class="$style['send-buttons']" class='send-buttons'>
         <div data-type='send-button-item' style="padding-right:6px" @click='sendGift'>
           <p>发送</p>
@@ -90,10 +106,12 @@
       </div>
     </div>
   </div>
-  <!-- <input placeholder="请输入内容" v-model='msg'>
-    <button @click='submitText(msg)'>发送祝福语</button>
-
-    <button @click='handleClickTicket'>开始投票</button> -->
+  <svg style="display: none" x="0px" y="0px" width="1072" height="1024" viewBox="0 0 1024 1024" xmlns="">
+       <!-- 生日提醒 -->
+       <g id='gift-sended'>
+         <path d="M512 1024a512 512 0 1 1 512-512 512 512 0 0 1-512 512z m264.931556-672.881778a56.888889 56.888889 0 0 0-80.440889 0L455.111111 592.440889 334.449778 471.779556a56.888889 56.888889 0 0 0-80.497778 80.440888l160.881778 160.881778a56.888889 56.888889 0 0 0 80.440889 0l281.6-281.6a56.888889 56.888889 0 0 0 0.056889-80.384z" p-id="3593" data-spm-anchor-id="a313x.7781069.0.i6"></path>
+      </g>
+     </svg>
 </div>
 </template>
 
@@ -101,6 +119,7 @@
 import {
   axiosPost
 } from '@/lib/ajax.js';
+import storagejs from '@/lib/storagejs'
 import {
   mapState
 } from 'vuex';
@@ -110,20 +129,31 @@ export default {
   data() {
     return {
       itemNames: {
-        '1' : '小品《西天取经》',
-        '2' : '串烧表演《锦绣中华》',
-        '3' : '舞蹈《绿荫风采》',
-        '4' : '相声《津味安信》',
-        '5' : '小品《有你很精彩》',
-        '6' : '歌曲《广西·我美丽的家》',
-        '7' : '舞蹈《舞动未来》',
-        '8' : '小品《将广告进行到底》'
+        '1': '小品《西天取经》',
+        '2': '串烧表演《锦绣中华》',
+        '3': '舞蹈《绿荫风采》',
+        '4': '相声《津味安信》',
+        '5': '小品《有你很精彩》',
+        '6': '歌曲《广西·我美丽的家》',
+        '7': '舞蹈《舞动未来》',
+        '8': '小品《将广告进行到底》'
       },
       currentGift: 1, //当前的礼物id， 默认1
       msg: '', //祝福语
-      currentOption: ''
+      currentOption: '',
+      // 当前的节目id
+      currentItemType: 1
+      // //当前可以赠送礼物的数量
+      // currentGifts: {
+      //   '1': 1,
+      //   '2': 1,
+      //   '3': 1
+      // }
     }
   },
+  // created() {
+  //   this.initGetCurrentType()
+  // },
   computed: {
     ...mapState(['userInfo']),
     wcUser() {
@@ -134,22 +164,43 @@ export default {
     }
   },
   methods: {
+    //初始化获取当前的节目ID
+    initGetCurrentType() {
+      axiosPost(`${this.$Host}/queryCurrentItemType`).then(res => {
+        const currentItemType = res.data.currentItemType
+        this.currentItemType = currentItemType
+      })
+    },
     /*
     打开礼物页面
     */
-    handleClickOpenGift(val){
-      this.currentGift = val
-      this.currentOption = 'gift'
+    handleClickOpenGift(val) {
+      axiosPost(`${this.$Host}/queryCurrentItemType`).then(res => {
+        const currentItemType = res.data.currentItemType
+        this.currentItemType = currentItemType
+        const currentStoreGift = storagejs.get(`gift${currentItemType}`)
+        if (currentStoreGift[val] == 0) {
+          this.$MessageBox('提示', '此礼物，在当前节目中已经发送过了！')
+          return
+        } else {
+          this.currentGift = val
+          this.currentOption = 'gift'
+        }
+      })
+
     },
     /**
     发送礼物
     **/
     sendGift() {
       axiosPost(`${this.$Host}/sendGift`, Object.assign({
-        itemtype: this.userInfo.itemType,
+        itemtype: this.currentItemType,
         gift: this.currentGift
       }, this.wcUser)).then(() => {
         this.$Toast('礼物赠送成功')
+        let currentStoreGift = storagejs.get(`gift${this.currentItemType}`)
+        currentStoreGift[this.currentGift] = 0
+        storagejs.set(`gift${this.currentItemType}`, currentStoreGift)
         this.currentOption = ''
       })
     },
@@ -157,38 +208,30 @@ export default {
     发送祝福语
     **/
     submitText() {
-      axiosPost(`${this.$Host}/addText`, Object.assign({
-        itemtype: this.userInfo.itemType,
-        text: this.msg
-      }, this.wcUser)).then(res => {
-        this.$Toast('发送成功!')
-        this.currentOption = ''
+      axiosPost(`${this.$Host}/queryCurrentItemType`).then(res=>{
+        const currentItemType = res.data.currentItemType
+        axiosPost(`${this.$Host}/addText`, Object.assign({
+          itemtype: currentItemType,
+          text: this.msg
+        }, this.wcUser)).then(res => {
+          this.$Toast('发送成功!')
+          this.currentOption = ''
+        })
       })
     },
     /**
     点赞
     **/
-    handleClickPraise: _Fun.throttle(function(){
-      axiosPost(`${this.$Host}/addPraise`, {
-        itemtype: this.userInfo.itemType
-      }).then(()=>{
-        this.$MessageBox('提示:', '点赞成功,10秒后可以再点！')
+    handleClickPraise: _Fun.throttle(function() {
+      axiosPost(`${this.$Host}/queryCurrentItemType`).then(res => {
+        const currentItemType = res.data.currentItemType
+        axiosPost(`${this.$Host}/addPraise`, {
+          itemtype: currentItemType
+        }).then(() => {
+          this.$MessageBox('提示:', '点赞成功,10秒后可以再点！')
+        })
       })
-    }, 10000),
-    /**
-    开始投票
-    **/
-    handleClickTicket() {
-      axiosPost(`${this.$Host}/searchIsTicket`).then(res => {
-        if (res.data.allowTicket) {
-          this.$router.push('ticket')
-          return
-        }
-        throw res
-      }).catch(res => {
-        this.$MessageBox('提示:', '投票未开始');
-      })
-    }
+    }, 10000)
   }
 }
 </script>
@@ -253,6 +296,29 @@ export default {
         width: 33.33%;
         float: left;
         padding: 0 1px;
+        position: relative;
+        & [data-type='gift-item-bg'] {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: rgba(0,0,0,0.6);
+            & svg {
+                height: 36px;
+                max-width: 100%;
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 30px;
+                top: 0;
+                margin: auto;
+                fill: white;
+            }
+        }
     }
     & [data-type='gift-img'] {
         height: 120px;
@@ -293,22 +359,22 @@ export default {
     margin: 0 auto;
     position: relative;
     background: linear-gradient(#443416, #b59b45);
-    transition: transform .1s ease;
+    transition: transform 0.1s ease;
     &:active {
-      transform: scale(.8);
+        transform: scale(.8);
     }
     & [data-type='button-item'] {
-      background-color: #ffefba;
-      position: absolute;
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      margin: auto;
-      overflow: hidden;
+        background-color: #ffefba;
+        position: absolute;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        overflow: hidden;
     }
 }
 

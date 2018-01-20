@@ -94,18 +94,17 @@ export default {
     }
   },
   created(){
-    this.queryBaseItemInfo()
-  },
-  mounted() {
-    this.itemtype = storagejs.get('currentItemType')
-    this.refshQueryTextListsByPage()
+    this.queryBaseItemInfo().then(()=>{
+      this.refshQueryTextListsByPage()
+    })
   },
   methods: {
     //查询基本控制信息
     queryBaseItemInfo(){
-      axiosPost(`${this.$Host}/queryBaseItemInfo`).then(res=>{
+      return axiosPost(`${this.$Host}/queryBaseItemInfo`).then(res=>{
         this.isAllowEnter = res.data.allowEnter
         this.allowTicket = res.data.allowTicket
+        this.itemtype = res.data.currentItemType
       })
     },
     //切换场景
@@ -115,7 +114,6 @@ export default {
           id: item.id
         }).then(() => {
           this.itemtype = item.id
-          storagejs.set('currentItemType', item.id)
           this.refshQueryTextListsByPage()
         })
       });

@@ -9,27 +9,22 @@ import axios from 'axios';
 import {mapActions} from 'vuex'
 import {getParam} from '@/lib/factory'
 import storagejs from '@/lib/storagejs'
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 export default {
   name: 'mobile-contenter',
   created() {
       const that = this
-    //初始化 当前节目
-    this.initGetCurrentItemType()
-    const socket = io(this.$SocketHost);
-    socket.on('screen', function(val) {
-      that.update_item_type(val.id)
-    })
+    //初始化发送礼物的数量
+    this.SetGiftNumStorage()
+    // const socket = io(this.$SocketHost);
+    // socket.on('screen', function(val) {
+    //   that.update_item_type(val.id)
+    // })
     this.getWchartUserInfo()
   },
   methods: {
-    ...mapActions(['update_user_info', 'update_item_type']),
-    initGetCurrentItemType(){
-      axios.post(`${this.$Host}/queryCurrentItemType`).then(res=> {
-        const currentItemType = res.data.data.currentItemType
-        this.update_item_type(currentItemType)
-      })
-    },
+    //...mapActions(['update_user_info', 'update_item_type']),
+    ...mapActions(['update_user_info']),
     //获取微信用户信息（头像、图片）
     getWchartUserInfo(){
       const params = {
@@ -61,6 +56,18 @@ export default {
           })
         }
       })
+    },
+    SetGiftNumStorage(){
+      for(var i=1; i<9; i++) {
+        const _tempStore = storagejs.get(`gift${i}`)
+        if (_tempStore == undefined) {
+          storagejs.set(`gift${i}`, {
+            '1': 1,
+            '2': 1,
+            '3': 1
+          })
+        }
+      }
     }
   }
 }
