@@ -37,7 +37,7 @@ export default {
         params
       }).then(res=>{
         const _data = res.data
-        if(JSON.stringify(_data) != '{}') {
+        if (JSON.stringify(_data) != '{}') {
           axios.get(`${this.$wcApi}/sns/userinfo`, {
             params: {
               'access_token': _data.access_token,
@@ -46,7 +46,7 @@ export default {
             }
           }).then(result=>{
             const userInfo = result.data
-            if(JSON.stringify(userInfo) != '{}'){
+            if (JSON.stringify(userInfo) != '{}') {
               this.update_user_info({
                 name: userInfo.nickname,
                 img: userInfo.headimgurl,
@@ -58,7 +58,7 @@ export default {
       })
     },
     SetGiftNumStorage(){
-      for(var i=1; i<9; i++) {
+      for (var i = 1; i < 9; i++) {
         const _tempStore = storagejs.get(`gift${i}`)
         if (_tempStore == undefined) {
           storagejs.set(`gift${i}`, {

@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     bgcolor(val){
-      const alpha = (1 - val/5) < 0.2 ? 0.2 : 1 - val/5
+      const alpha = (1 - val / 5) < 0.2 ? 0.2 : 1 - val / 5
       return `background-color: rgba(98,78,17, ${alpha})`
     },
     queryResultTickets(){
