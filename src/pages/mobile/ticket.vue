@@ -1,7 +1,7 @@
 <template>
   <div :class="$style['ticket-wrapper']">
     <div :class="$style['logo-wrapper']">
-      <img :src="require('../../assets/logo.png')" alt="">
+      <img src="http://qiniu.xingkun.top/logo.png" alt="">
     </div>
     <p style="padding: 24px 0">请点击下面图标</p>
     <p style="padding-bottom: 24px; font-size:28px;color:#ffe68c;font-weight:bold">为喜爱的节目投票吧</p>
@@ -10,7 +10,6 @@
           <span style="display:inline-block; width: 50%; float:left">战队名称</span>
           <span style="display:inline-block; width: 50%">战队名称</span>
       </p>
-
       <div :class="$style['select-ticket']">
         <div data-type="ticket-item" v-for='item in 4' @click='handleChangeTicket(item)'>
           <div data-type="star">

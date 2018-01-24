@@ -1,7 +1,7 @@
 <template>
 <div :class="$style['mobile-wrapper']">
   <div :class="$style['logo-wrapper']">
-    <img :src="require('../../assets/logo.png')" alt="">
+    <img src="http://qiniu.xingkun.top/logo.png" alt="">
   </div>
   <div class="user-wrapper">
     <div :class="$style['user-img']">
@@ -27,7 +27,7 @@
               </svg>
             </div> -->
             <div data-type="gift-img">
-              <img src="./gift1.jpg" alt="">
+              <img src="http://qiniu.xingkun.top/gift1.jpg" alt="">
             </div>
             <div data-type="gift-button" @click="handleClickOpenGift(1)">
               赠送
@@ -40,7 +40,7 @@
               </svg>
             </div> -->
             <div data-type="gift-img">
-              <img src="./gift2.jpg" alt="">
+              <img src="http://qiniu.xingkun.top/gift2.jpg" alt="">
             </div>
             <div data-type="gift-button" @click="handleClickOpenGift(2)">
               赠送
@@ -53,7 +53,7 @@
               </svg>
             </div> -->
             <div data-type="gift-img">
-              <img src="./gift3.jpg" alt="">
+              <img src="http://qiniu.xingkun.top/gift3.jpg" alt="">
             </div>
             <div data-type="gift-button" @click="handleClickOpenGift(3)">
               赠送
@@ -64,14 +64,14 @@
       <div :class="$style['option-bottom']">
         <div style='width: 50%; float: left'>
           <div :class="$style['crile-button']" @click='handleClickPraise'>
-            <div data-type="button-item" :style="'background-size: 90%;background-position: 4px 4px;background-repeat: no-repeat;background-image: url(' + require('./finger.png') + ');'">
+            <div data-type="button-item" style="background-size: 90%;background-position: 4px 4px;background-repeat: no-repeat;background-image: url(http://qiniu.xingkun.top/finger.png);">
 
             </div>
           </div>
         </div>
         <div style='width: 50%; position:relative; float: left; height: 96px'>
           <div :class="$style['crile-button']" @click="currentOption='msg'; msg = ''">
-            <div data-type="button-item" :style="'background-size: 50%;background-position:center;background-repeat: no-repeat;background-image: url(' + require('./msg.png') + ');'">
+            <div data-type="button-item" style="'background-size: 50%;background-position:center;background-repeat: no-repeat;background-image: url(http://qiniu.xingkun.top/msg.png);'">
             </div>
           </div>
         </div>
@@ -79,7 +79,7 @@
     </div>
     <div :class="$style['send-gift-wrapper']" v-if="currentOption == 'gift'">
       <p style="padding: 12px 0;">赠送礼物</p>
-      <img :src="currentGiftImg" alt="" style='height: 180px; margin-bottom:6px'>
+      <img :src="'http://qiniu.xingkun.top/gift' + currentGift + '.jpg'" alt="" style='height: 180px; margin-bottom:6px'>
       <p style="padding: 12px 0">赠送节目名称：{{itemNames[currentItemType]}}</p>
       <div :class="$style['send-buttons']" class='send-buttons'>
         <div data-type='send-button-item' style="padding-right:6px" @click='sendGift'>
@@ -158,10 +158,10 @@ export default {
     ...mapState(['userInfo']),
     wcUser() {
       return this.userInfo.userInfo
-    },
-    currentGiftImg() {
-      return require(`./gift${this.currentGift}.jpg`)
     }
+    // currentGiftImg() {
+    //   return require(``)
+    // }
   },
   methods: {
     //初始化获取当前的节目ID

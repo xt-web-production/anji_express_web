@@ -1,7 +1,7 @@
 <template>
-  <div :class="$style.control" :style="'background-position: center; background-image: url(' + require('../../assets/bg.jpg') + ');'">
+  <div :class="$style.control" style="background-position: center; background-image: url(http://qiniu.xingkun.top/bg.jpg);">
     <div :class="$style['logo-wrapper']">
-      <img :src="require('../../assets/logo.png')" alt="">
+      <img src="http://qiniu.xingkun.top/logo.png" alt="">
     </div>
     <div :class="$style['burron-wrapper']">
       <p :class='$style.button' class='button animated bounceInUp' @click="handleClickEnterShow" v-if='this.wcUser.img'>登录到直播间</p>
