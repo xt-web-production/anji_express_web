@@ -94,7 +94,7 @@
     <div :class="$style['send-msg-wrapper']" v-if="currentOption == 'msg'">
       <div style="padding: 0 12px;">
         <p style="padding: 12px 0;">发送弹幕</p>
-        <textarea data-type='textarea' v-model='msg' placeholder="请在此输入您的祝福" />
+        <textarea data-type='textarea' v-model='msg' maxlength='11' placeholder="请在此输入您的祝福" />
       </div>
       <div :class="$style['send-buttons']" class='send-buttons'>
         <div data-type='send-button-item' style="padding-right:6px" @click='submitText'>

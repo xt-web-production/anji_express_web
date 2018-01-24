@@ -78,7 +78,7 @@ export default {
             id: item.id,
             count: item.count,
             gift: item.gift,
-            num: item.count * 2 + item.gift,
+            num: parseInt(item.count * 0.7 + item.gift * 0.3),
             preCount: item.count * 100 / allCount,
             preGift: item.gift * 100 / allGift,
             name: this.itemNames[item.id],
