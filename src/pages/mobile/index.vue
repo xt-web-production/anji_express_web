@@ -29,8 +29,8 @@ export default {
     getWchartUserInfo(){
       const params = {
         code: getParam(window.location.href, 'code'),
-        appid: 'wx4dcaf4dca875e624',
-        secret: '07f5aa7ed3a81b824eeb9ad303a277a4',
+        appid: 'wxbc8a3b506536d138', //星坤 wxbc8a3b506536d138 // 测试 wx4dcaf4dca875e624
+        secret: '9921201d63a01a6821e5fbb89106f33f', // 星坤 9921201d63a01a6821e5fbb89106f33f //测试 07f5aa7ed3a81b824eeb9ad303a277a4
         grant_type: 'authorization_code'
       }
       axios.get(`${this.$wcApi}/sns/oauth2/access_token`, {
