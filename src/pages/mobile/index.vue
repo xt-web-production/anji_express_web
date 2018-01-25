@@ -6,14 +6,18 @@
 
 <script>
 import axios from 'axios';
-import {mapActions} from 'vuex'
-import {getParam} from '@/lib/factory'
+import {
+  mapActions
+} from 'vuex'
+import {
+  getParam
+} from '@/lib/factory'
 import storagejs from '@/lib/storagejs'
 // import io from 'socket.io-client';
 export default {
   name: 'mobile-contenter',
   created() {
-      const that = this
+    const that = this
     //初始化发送礼物的数量
     this.SetGiftNumStorage()
     // const socket = io(this.$SocketHost);
@@ -26,11 +30,11 @@ export default {
     //...mapActions(['update_user_info', 'update_item_type']),
     ...mapActions(['update_user_info']),
     //获取微信用户信息（头像、图片）
-    getWchartUserInfo(){
+    getWchartUserInfo() {
 
-      const _storeUserInfo = storagejs.get(' userInfo')
-      if (_storeUserInfo.openId && _storeUserInfo.openId.indexOf('test') < 0) {
-        this.update_user_info(_storeUserInfo)
+      const storeuserInfo = storagejs.get('userInfo')
+      if (storeuserInfo) {
+        this.update_user_info(storeuserInfo)
         return
       }
 
@@ -42,7 +46,7 @@ export default {
       }
       axios.get(`${this.$wcApi}/sns/oauth2/access_token`, {
         params
-      }).then(res=>{
+      }).then(res => {
         const _data = res.data
         if (JSON.stringify(_data) != '{}') {
           axios.get(`${this.$wcApi}/sns/userinfo`, {
@@ -51,7 +55,7 @@ export default {
               'openid': _data.openid,
               'lang': 'zh_CN'
             }
-          }).then(result=>{
+          }).then(result => {
             const userInfo = result.data
             if (JSON.stringify(userInfo) != '{}') {
               const _userInfo = {
@@ -60,13 +64,13 @@ export default {
                 openId: userInfo.openid
               }
               this.update_user_info(_userInfo)
-              storagejs.set(' userInfo', _userInfo)
+              storagejs.set('userInfo', _userInfo)
             }
           })
         }
       })
     },
-    SetGiftNumStorage(){
+    SetGiftNumStorage() {
       for (var i = 1; i < 9; i++) {
         const _tempStore = storagejs.get(`gift${i}`)
         if (_tempStore == undefined) {
