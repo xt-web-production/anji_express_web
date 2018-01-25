@@ -38,8 +38,8 @@
       <div data-type='send-button-item' style="float: left;" @click='handleCLickTick'>
         <p>确定</p>
       </div>
-      <div data-type='send-button-item' style="float: right;" @click="$router.push('/')">
-        <p>返回直播间</p>
+      <div data-type='send-button-item' style="float: right;" @click="currentSelectId = ''">
+        <p>取消</p>
       </div>
     </div>
   </div>
