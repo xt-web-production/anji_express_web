@@ -27,6 +27,13 @@ export default {
     ...mapActions(['update_user_info']),
     //获取微信用户信息（头像、图片）
     getWchartUserInfo(){
+
+      const _storeUserInfo = storagejs.get(' userInfo')
+      if (_storeUserInfo.openId && _storeUserInfo.openId.indexOf('test') < 0) {
+        this.update_user_info(_storeUserInfo)
+        return
+      }
+
       const params = {
         code: getParam(window.location.href, 'code'),
         appid: 'wxbc8a3b506536d138', //星坤 wxbc8a3b506536d138 // 测试 wx4dcaf4dca875e624
@@ -47,11 +54,13 @@ export default {
           }).then(result=>{
             const userInfo = result.data
             if (JSON.stringify(userInfo) != '{}') {
-              this.update_user_info({
+              const _userInfo = {
                 name: userInfo.nickname,
                 img: userInfo.headimgurl,
                 openId: userInfo.openid
-              })
+              }
+              this.update_user_info(_userInfo)
+              storagejs.set(' userInfo', _userInfo)
             }
           })
         }
