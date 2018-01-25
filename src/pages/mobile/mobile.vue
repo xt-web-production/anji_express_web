@@ -117,7 +117,7 @@
 
 <script>
 import {
-  axiosPost
+  axiosPost, axiosPostVail
 } from '@/lib/ajax.js';
 import storagejs from '@/lib/storagejs'
 import {
@@ -175,7 +175,7 @@ export default {
     打开礼物页面
     */
     handleClickOpenGift(val) {
-      axiosPost(`${this.$Host}/queryCurrentItemType`).then(res => {
+      axiosPostVail(`${this.$Host}/queryCurrentItemType`).then(res => {
         const currentItemType = res.data.currentItemType
         this.currentItemType = currentItemType
         const currentStoreGift = storagejs.get(`gift${currentItemType}`)
@@ -186,6 +186,8 @@ export default {
           this.currentGift = val
           this.currentOption = 'gift'
         }
+      }).catch(()=>{
+        this.$MessageBox('提示', '直播通道已关闭，请稍等！')
       })
 
     },
@@ -193,7 +195,7 @@ export default {
     发送礼物
     **/
     sendGift() {
-      axiosPost(`${this.$Host}/sendGift`, Object.assign({
+      axiosPostVail(`${this.$Host}/sendGift`, Object.assign({
         itemtype: this.currentItemType,
         gift: this.currentGift
       }, this.wcUser)).then(() => {
@@ -202,6 +204,8 @@ export default {
         currentStoreGift[this.currentGift] = 0
         storagejs.set(`gift${this.currentItemType}`, currentStoreGift)
         this.currentOption = ''
+      }).catch(()=>{
+        this.$MessageBox('提示', '直播通道已关闭，请稍等！')
       })
     },
     /**

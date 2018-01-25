@@ -45,7 +45,7 @@
 
 <script>
 import {
-  axiosPostControl
+  axiosPost
 } from '@/lib/ajax.js';
 import storagejs from '@/lib/storagejs'
 export default {
@@ -101,7 +101,7 @@ export default {
   methods: {
     //查询基本控制信息
     queryBaseItemInfo(){
-      return axiosPostControl(`${this.$Host}/queryBaseItemInfo`).then(res=>{
+      return axiosPost(`${this.$Host}/queryBaseItemInfo`).then(res=>{
         this.isAllowEnter = res.data.allowEnter
         this.allowTicket = res.data.allowTicket
         this.itemtype = res.data.currentItemType
@@ -110,7 +110,7 @@ export default {
     //切换场景
     handleChangeScreen(item) {
       this.$MessageBox.confirm(`确定选择：${item.name}`).then(action => {
-        axiosPostControl(`${this.$Host}/changeScreen`, {
+        axiosPost(`${this.$Host}/changeScreen`, {
           id: item.id
         }).then(() => {
           this.itemtype = item.id
@@ -122,7 +122,7 @@ export default {
     //开始直播
     handleStartShow() {
       this.$MessageBox.confirm('确定开始直播？').then(()=>{
-        axiosPostControl(`${this.$Host}/startShow`).then(()=>{
+        axiosPost(`${this.$Host}/startShow`).then(()=>{
           this.isAllowEnter = 1
         })
       })
@@ -130,7 +130,7 @@ export default {
     //停止直播
     handleStopShow() {
       this.$MessageBox.confirm('确定停止直播？').then(()=>{
-        axiosPostControl(`${this.$Host}/stopShow`).then(()=>{
+        axiosPost(`${this.$Host}/stopShow`).then(()=>{
           this.isAllowEnter = 0
         })
       })
@@ -138,7 +138,7 @@ export default {
     //开始投票
     handleStartTicket() {
       this.$MessageBox.confirm('确定开始投票？').then(()=>{
-        axiosPostControl(`${this.$Host}/allowStartTicket`).then(()=>{
+        axiosPost(`${this.$Host}/allowStartTicket`).then(()=>{
           this.allowTicket = 1
         })
       })
@@ -146,7 +146,7 @@ export default {
     //停止投票
     handleStopTicket() {
       this.$MessageBox.confirm('确定停止投票？').then(()=>{
-        axiosPostControl(`${this.$Host}/allowEndTicket`).then(()=>{
+        axiosPost(`${this.$Host}/allowEndTicket`).then(()=>{
           this.allowTicket = 0
         })
       })
@@ -169,7 +169,7 @@ export default {
         pagesize: 10,
         itemtype: this.itemtype
       }
-      axiosPostControl(`${this.$Host}/queryText`, params).then(res => {
+      axiosPost(`${this.$Host}/queryText`, params).then(res => {
         if (res.data.length < 1) {
           this.page = 0
           if (isAddPage) {
@@ -183,13 +183,13 @@ export default {
     //发送祝福语
     handleSendtext(item) {
       item.allowsend = 0
-      axiosPostControl(`${this.$Host}/sendText`, item)
+      axiosPost(`${this.$Host}/sendText`, item)
     },
 
     //切换大屏的显示内容
     handleBigScreenPage(routeName) {
       this.bigScreenStatus = routeName
-      axiosPostControl(`${this.$Host}/changeBigPage`, {
+      axiosPost(`${this.$Host}/changeBigPage`, {
         routeName
       })
     }

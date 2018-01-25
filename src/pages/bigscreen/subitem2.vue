@@ -104,7 +104,7 @@
 
 <script>
 import {
-  axiosPostControl
+  axiosPost
 } from '@/lib/ajax.js';
 import _Math from 'lodash/Math'
 import _Collection from 'lodash/Collection'
@@ -140,7 +140,7 @@ export default {
   },
   methods: {
     queryResultTickets(){
-      axiosPostControl(`${this.$Host}/queryResultTickets`).then(res=> {
+      axiosPost(`${this.$Host}/queryResultTickets`).then(res=> {
         const allCount = _Math.sum(res.data, 'count') || 1
         const itemDatas = res.data.map(item=>{
           return {
