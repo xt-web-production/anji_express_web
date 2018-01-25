@@ -10,7 +10,7 @@
     <p :class="$style['user-name']">{{wcUser.name}}</p>
   </div>
   <div class="current-item-type">
-    <div :class="$style['current-item']">欢饮您:
+    <div :class="$style['current-item']">欢迎您:
       <!-- <span style="padding-left: 6px; color: white">{{itemNames[currentItemType]}}</span> -->
       <span style="padding-left: 6px; color: white">参加安吉物流新春团拜会</span>
     </div>
