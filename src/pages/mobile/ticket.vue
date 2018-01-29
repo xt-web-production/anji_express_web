@@ -7,30 +7,72 @@
     <p style="padding-bottom: 24px; font-size:28px;color:#ffe68c;font-weight:bold">为喜爱的节目投票吧</p>
     <div :class="$style['ticket-send-wrapper']">
       <p style="margin-bottom: 6px;color: #b69c46">
-          <span style="display:inline-block; width: 50%; float:left">战队名称</span>
-          <span style="display:inline-block; width: 50%">战队名称</span>
+          <span style="display:inline-block; width: 50%; float:left">忻际穿越战队</span>
+          <span style="display:inline-block; width: 50%">王者荣耀战队</span>
       </p>
       <div :class="$style['select-ticket']">
-        <div data-type="ticket-item" v-for='item in 4' @click='handleChangeTicket(item)'>
+        <div data-type="ticket-item" @click='handleChangeTicket(1)'>
           <div data-type="star">
             <svg t="1515380343123" style="opacity: 0" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
-            <svg t="1515380343123" data-type="svg-star" class="icon" :style="currentSelectId == item ? 'fill: #ff6761' : 'fill: #ffe68c'" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
+            <svg t="1515380343123" data-type="svg-star" class="icon" :style="currentSelectId == 1 ? 'fill: #ff6761' : 'fill: #ffe68c'" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
           </div>
-          <p style="font-size: 12px; padding: 6px 0" v-html='itemNames[item]'></p>
+          <p style="font-size: 12px; padding: 6px 0" v-html='itemNames[1]'></p>
+        </div>
+        <div data-type="ticket-item" @click='handleChangeTicket(4)'>
+          <div data-type="star">
+            <svg t="1515380343123" style="opacity: 0" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
+            <svg t="1515380343123" data-type="svg-star" class="icon" :style="currentSelectId == 4 ? 'fill: #ff6761' : 'fill: #ffe68c'" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
+          </div>
+          <p style="font-size: 12px; padding: 6px 0" v-html='itemNames[4]'></p>
+        </div>
+        <div data-type="ticket-item" @click='handleChangeTicket(2)'>
+          <div data-type="star">
+            <svg t="1515380343123" style="opacity: 0" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
+            <svg t="1515380343123" data-type="svg-star" class="icon" :style="currentSelectId == 2 ? 'fill: #ff6761' : 'fill: #ffe68c'" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
+          </div>
+          <p style="font-size: 12px; padding: 6px 0" v-html='itemNames[2]'></p>
+        </div>
+        <div data-type="ticket-item" @click='handleChangeTicket(6)'>
+          <div data-type="star">
+            <svg t="1515380343123" style="opacity: 0" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
+            <svg t="1515380343123" data-type="svg-star" class="icon" :style="currentSelectId == 6 ? 'fill: #ff6761' : 'fill: #ffe68c'" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
+          </div>
+          <p style="font-size: 12px; padding: 6px 0" v-html='itemNames[6]'></p>
         </div>
       </div>
 
       <p style="margin-bottom: 6px;color: #b69c46">
-          <span style="display:inline-block; width: 50%; float:left">战队名称</span>
-          <span style="display:inline-block; width: 50%">战队名称</span>
+          <span style="display:inline-block; width: 50%; float:left">国家宝藏战队</span>
+          <span style="display:inline-block; width: 50%">沈采飞扬战队</span>
       </p>
       <div :class="$style['select-ticket']">
-        <div data-type="ticket-item" v-for='item in 4' @click='currentSelectId = item + 4'>
+        <div data-type="ticket-item" @click='handleChangeTicket(3)'>
           <div data-type="star">
             <svg t="1515380343123" style="opacity: 0" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
-            <svg t="1515380343123" data-type="svg-star" class="icon" :style="currentSelectId == item + 4 ? 'fill: #ff6761' : 'fill: #ffe68c'" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
+            <svg t="1515380343123" data-type="svg-star" class="icon" :style="currentSelectId == 3 ? 'fill: #ff6761' : 'fill: #ffe68c'" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
           </div>
-          <p style="font-size: 12px; padding: 6px 0" v-html='itemNames[item + 4]'></p>
+          <p style="font-size: 12px; padding: 6px 0" v-html='itemNames[3]'></p>
+        </div>
+        <div data-type="ticket-item" @click='handleChangeTicket(5)'>
+          <div data-type="star">
+            <svg t="1515380343123" style="opacity: 0" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
+            <svg t="1515380343123" data-type="svg-star" class="icon" :style="currentSelectId == 5 ? 'fill: #ff6761' : 'fill: #ffe68c'" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
+          </div>
+          <p style="font-size: 12px; padding: 6px 0" v-html='itemNames[5]'></p>
+        </div>
+        <div data-type="ticket-item" @click='handleChangeTicket(7)'>
+          <div data-type="star">
+            <svg t="1515380343123" style="opacity: 0" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
+            <svg t="1515380343123" data-type="svg-star" class="icon" :style="currentSelectId == 7 ? 'fill: #ff6761' : 'fill: #ffe68c'" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
+          </div>
+          <p style="font-size: 12px; padding: 6px 0" v-html='itemNames[7]'></p>
+        </div>
+        <div data-type="ticket-item" @click='handleChangeTicket(8)'>
+          <div data-type="star">
+            <svg t="1515380343123" style="opacity: 0" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
+            <svg t="1515380343123" data-type="svg-star" class="icon" :style="currentSelectId == 8 ? 'fill: #ff6761' : 'fill: #ffe68c'" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1858"><path d="M507.904 327.168C394.24 64 71.168 125.44 69.12 430.592c-1.024 167.424 154.112 230.4 257.024 297.472 99.84 65.024 171.52 154.112 182.272 191.488 9.728-36.864 89.088-128.512 181.76-193.536C791.552 654.848 948.224 596.48 947.2 428.544 945.152 122.88 616.448 74.752 507.904 327.168z" p-id="1859" data-spm-anchor-id="a313x.7781069.0.i0"></path></svg>
+          </div>
+          <p style="font-size: 12px; padding: 6px 0" v-html='itemNames[8]'></p>
         </div>
       </div>
     </div>
@@ -69,9 +111,9 @@ export default {
         '2' : '有你很精彩',
         '3' : '锦绣中华',
         '4' : '津味安信',
-        '5' : '大话安吉之海陆荣耀',
+        '5' : '大话安吉之</br>海陆荣耀',
         '6' : '广西 我美丽的家',
-        '7' : '将广告进行到底',
+        '7' : '将广告进行</br>到底',
         '8' : '舞动未来'
       },
       currentSelectId : ''

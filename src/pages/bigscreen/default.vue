@@ -145,6 +145,11 @@ export default {
       if (val.length) {
           !this.setInterGift && this.initIntervalGift()
       } else {
+        if(val.length < 1) {
+          setTimeout(()=>{
+            this.currentGiftItem = null
+          }, 2000)
+        }
         if (this.setInterGift) {
           clearInterval(this.setInterGift)
           this.setInterGift = null
