@@ -19,6 +19,19 @@
           </span>
         </div>
         <div :class="$style['ticket-item']">
+          <p style="padding-bottom: 16px">{{itemDatas[3].name}}</p>
+          <div :class="$style.progressWrapper">
+            <div data-type='progressbar' :style="'width:' + itemDatas[3].pre + '%'">
+            </div>
+          </div>
+          <span :class="$style.ticketVal">
+            {{itemDatas[3].count}}<span style="margin-left: 12px">票</span>
+          </span>
+        </div>
+      </div>
+      <div :class="$style['ticket-block']">
+        <p style="color: #dcbe4a; font-size: 26px;">{{itemDatas[1].teamName}}</p>
+        <div :class="$style['ticket-item']">
           <p style="padding-bottom: 16px">{{itemDatas[1].name}}</p>
           <div :class="$style.progressWrapper">
             <div data-type='progressbar' :style="'width:' + itemDatas[1].pre + '%'">
@@ -26,6 +39,16 @@
           </div>
           <span :class="$style.ticketVal">
             {{itemDatas[1].count}}<span style="margin-left: 12px">票</span>
+          </span>
+        </div>
+        <div :class="$style['ticket-item']">
+          <p style="padding-bottom: 16px">{{itemDatas[5].name}}</p>
+          <div :class="$style.progressWrapper">
+            <div data-type='progressbar' :style="'width:' + itemDatas[5].pre + '%'">
+            </div>
+          </div>
+          <span :class="$style.ticketVal">
+            {{itemDatas[5].count}}<span style="margin-left: 12px">票</span>
           </span>
         </div>
       </div>
@@ -42,19 +65,6 @@
           </span>
         </div>
         <div :class="$style['ticket-item']">
-          <p style="padding-bottom: 16px">{{itemDatas[3].name}}</p>
-          <div :class="$style.progressWrapper">
-            <div data-type='progressbar' :style="'width:' + itemDatas[3].pre + '%'">
-            </div>
-          </div>
-          <span :class="$style.ticketVal">
-            {{itemDatas[3].count}}<span style="margin-left: 12px">票</span>
-          </span>
-        </div>
-      </div>
-      <div :class="$style['ticket-block']">
-        <p style="color: #dcbe4a; font-size: 26px;">{{itemDatas[4].teamName}}</p>
-        <div :class="$style['ticket-item']">
           <p style="padding-bottom: 16px">{{itemDatas[4].name}}</p>
           <div :class="$style.progressWrapper">
             <div data-type='progressbar' :style="'width:' + itemDatas[4].pre + '%'">
@@ -62,16 +72,6 @@
           </div>
           <span :class="$style.ticketVal">
             {{itemDatas[4].count}}<span style="margin-left: 12px">票</span>
-          </span>
-        </div>
-        <div :class="$style['ticket-item']">
-          <p style="padding-bottom: 16px">{{itemDatas[5].name}}</p>
-          <div :class="$style.progressWrapper">
-            <div data-type='progressbar' :style="'width:' + itemDatas[5].pre + '%'">
-            </div>
-          </div>
-          <span :class="$style.ticketVal">
-            {{itemDatas[5].count}}<span style="margin-left: 12px">票</span>
           </span>
         </div>
       </div>
@@ -113,24 +113,24 @@ export default {
     return {
       itemDatas: [],
       itemNames: {
-        '1' : '小品《西天取经》',
-        '2' : '串烧表演《锦绣中华》',
-        '3' : '舞蹈《绿荫风采》',
-        '4' : '相声《津味安信》',
-        '5' : '小品《有你很精彩》',
-        '6' : '歌曲《广西·我美丽的家》',
-        '7' : '舞蹈《舞动未来》',
-        '8' : '小品《将广告进行到底》'
+        '1' : '星星点灯',
+        '2' : '有你很精彩',
+        '3' : '锦绣中华',
+        '4' : '津味安信',
+        '5' : '大话安吉之海陆荣耀',
+        '6' : '广西 我美丽的家',
+        '7' : '将广告进行到底',
+        '8' : '舞动未来'
       },
       teamNames: {
-        '1' : '战队1',
-        '2' : '战队1',
-        '3' : '战队2',
-        '4' : '战队2',
-        '5' : '战队3',
-        '6' : '战队3',
-        '7' : '战队4',
-        '8' : '战队4'
+        '1' : '忻际穿越战队',
+        '2' : '王者荣耀战队',
+        '3' : '国家宝藏战队',
+        '4' : '忻际穿越战队',
+        '5' : '国家宝藏战队',
+        '6' : '王者荣耀战队',
+        '7' : '沈采飞扬战队',
+        '8' : '沈采飞扬战队'
       }
     }
   },

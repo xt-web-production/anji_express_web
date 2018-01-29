@@ -54,35 +54,35 @@ export default {
     return {
       itemNames: [{
           id: 1,
-          name: '小品《西天取经》'
+          name: '星星点灯'
         },
         {
           id: 2,
-          name: '串烧表演《锦绣中华》'
+          name: '有你很精彩'
         },
         {
           id: 3,
-          name: '舞蹈《绿荫风采》'
+          name: '锦绣中华'
         },
         {
           id: 4,
-          name: '相声《津味安信》'
+          name: '津味安信'
         },
         {
           id: 5,
-          name: '小品《有你很精彩》'
+          name: '大话安吉之海陆荣耀'
         },
         {
           id: 6,
-          name: '歌曲《广西·我美丽的家》'
+          name: '广西 我美丽的家'
         },
         {
           id: 7,
-          name: '舞蹈《舞动未来》'
+          name: '将广告进行到底'
         },
         {
           id: 8,
-          name: '小品《将广告进行到底》'
+          name: '舞动未来'
         }
       ],
       itemtype: 1,
