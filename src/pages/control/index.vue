@@ -58,7 +58,7 @@ export default {
         },
         {
           id: 2,
-          name: '有你很精彩'
+          name: '有你更精彩'
         },
         {
           id: 3,
