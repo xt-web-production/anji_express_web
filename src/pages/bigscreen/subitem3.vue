@@ -1,6 +1,6 @@
 <template lang="html">
   <div :class='$style.bigScreen' :style="'background-position: center; background-image: url(' + require('./subitem2_bg.jpg') + ');'">
-    <div :class="$style['logo-wrapper']">
+    <div :class="$style['logo-wrapper']" style='opacity: 0'>
       <img style="height: 100%;" :src="require('../../assets/logo.png')" alt="">
     </div>
     <p style="color: white; margin-top:24px; font-size:31px">安吉物流2018新春团拜会</p>
@@ -78,7 +78,7 @@ export default {
             id: item.id,
             count: item.count,
             gift: item.gift,
-            num: parseInt(item.count * 0.7 + item.gift * 0.3),
+            num: Math.round((item.count * 0.7 + item.gift * 0.3)*100)/100,
             preCount: item.count * 100 / allCount,
             preGift: item.gift * 100 / allGift,
             name: this.itemNames[item.id],

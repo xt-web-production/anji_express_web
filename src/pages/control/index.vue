@@ -1,5 +1,17 @@
 <template>
 <div :class="$style['control-wrapper']">
+  <h2> -----场景控制----- </h2>
+  <div :class="$style['control-item']">
+    <button :class="$style.controlbutton + ' ' + `${bigScreenStatus == 'bigscreendefault' ? $style['bt-primary'] : $style['bt-default']}`" @click="handleBigScreenPage('bigscreendefault')">年会直播</button>
+    <button :class="$style.controlbutton + ' ' + `${bigScreenStatus == 'subitem2' ? $style['bt-primary'] : $style['bt-default']}`" @click="handleBigScreenPage('subitem2')">投票中</button>
+    <button :class="$style.controlbutton + ' ' + `${bigScreenStatus == 'subitem1' ? $style['bt-primary'] : $style['bt-default']}`" @click="handleBigScreenPage('subitem1')">投票规则</button>
+    <button :class="$style.controlbutton + ' ' + `${bigScreenStatus == 'subitem3' ? $style['bt-primary'] : $style['bt-default']}`" @click="handleBigScreenPage('subitem3')">投票结果</button>
+    <p>
+      <button :class="$style.controlbutton + ' ' + `${allowTicket ? $style['bt-primary'] : $style['bt-default']}`" @click="handleStartTicket">开始投票</button>
+      <button :class="$style.controlbutton + ' ' + `${allowTicket ? $style['bt-default'] : $style['bt-primary']}`" @click="handleStopTicket">停止投票</button>
+    </p>
+
+  </div>
   <h2> -----节目切换----- </h2>
   <div :class="$style['control-item']">
     <button :class="$style.controlbutton + ' ' + `${itemtype == item.id ? $style['bt-primary'] : $style['bt-default']}`" :key="'changeitem' + item.id" @click="handleChangeScreen(item)" v-for='item in itemNames'>{{`${item.id}-${item.name}`}}</button>
@@ -8,15 +20,6 @@
   <div :class="$style['control-item']">
     <button :class="$style.controlbutton + ' ' + `${isAllowEnter ? $style['bt-primary'] : $style['bt-default']}`" @click="handleStartShow">开始直播</button>
     <button :class="$style.controlbutton + ' ' + `${isAllowEnter ? $style['bt-default'] : $style['bt-primary']}`" @click="handleStopShow">停止直播</button>
-  </div>
-  <h2> -----场景控制----- </h2>
-  <div :class="$style['control-item']">
-    <button :class="$style.controlbutton + ' ' + `${bigScreenStatus == 'bigscreendefault' ? $style['bt-primary'] : $style['bt-default']}`" @click="handleBigScreenPage('bigscreendefault')">年会直播</button>
-    <button :class="$style.controlbutton + ' ' + `${bigScreenStatus == 'subitem1' ? $style['bt-primary'] : $style['bt-default']}`" @click="handleBigScreenPage('subitem1')">投票规则</button>
-    <button :class="$style.controlbutton + ' ' + `${bigScreenStatus == 'subitem2' ? $style['bt-primary'] : $style['bt-default']}`" @click="handleBigScreenPage('subitem2')">投票中</button>
-    <button :class="$style.controlbutton + ' ' + `${bigScreenStatus == 'subitem3' ? $style['bt-primary'] : $style['bt-default']}`" @click="handleBigScreenPage('subitem3')">投票结果</button>
-    <button :class="$style.controlbutton + ' ' + `${allowTicket ? $style['bt-primary'] : $style['bt-default']}`" @click="handleStartTicket">开始投票</button>
-    <button :class="$style.controlbutton + ' ' + `${allowTicket ? $style['bt-default'] : $style['bt-primary']}`" @click="handleStopTicket">停止投票</button>
   </div>
 
   <h2> -----弹幕管理----- </h2>
@@ -93,15 +96,15 @@ export default {
       textLists: []
     }
   },
-  created(){
-    this.queryBaseItemInfo().then(()=>{
+  created() {
+    this.queryBaseItemInfo().then(() => {
       this.refshQueryTextListsByPage()
     })
   },
   methods: {
     //查询基本控制信息
-    queryBaseItemInfo(){
-      return axiosPost(`${this.$Host}/queryBaseItemInfo`).then(res=>{
+    queryBaseItemInfo() {
+      return axiosPost(`${this.$Host}/queryBaseItemInfo`).then(res => {
         this.isAllowEnter = res.data.allowEnter
         this.allowTicket = res.data.allowTicket
         this.itemtype = res.data.currentItemType
@@ -121,32 +124,32 @@ export default {
     },
     //开始直播
     handleStartShow() {
-      this.$MessageBox.confirm('确定开始直播？').then(()=>{
-        axiosPost(`${this.$Host}/startShow`).then(()=>{
+      this.$MessageBox.confirm('确定开始直播？').then(() => {
+        axiosPost(`${this.$Host}/startShow`).then(() => {
           this.isAllowEnter = 1
         })
       })
     },
     //停止直播
     handleStopShow() {
-      this.$MessageBox.confirm('确定停止直播？').then(()=>{
-        axiosPost(`${this.$Host}/stopShow`).then(()=>{
+      this.$MessageBox.confirm('确定停止直播？').then(() => {
+        axiosPost(`${this.$Host}/stopShow`).then(() => {
           this.isAllowEnter = 0
         })
       })
     },
     //开始投票
     handleStartTicket() {
-      this.$MessageBox.confirm('确定开始投票？').then(()=>{
-        axiosPost(`${this.$Host}/allowStartTicket`).then(()=>{
+      this.$MessageBox.confirm('确定开始投票？').then(() => {
+        axiosPost(`${this.$Host}/allowStartTicket`).then(() => {
           this.allowTicket = 1
         })
       })
     },
     //停止投票
     handleStopTicket() {
-      this.$MessageBox.confirm('确定停止投票？').then(()=>{
-        axiosPost(`${this.$Host}/allowEndTicket`).then(()=>{
+      this.$MessageBox.confirm('确定停止投票？').then(() => {
+        axiosPost(`${this.$Host}/allowEndTicket`).then(() => {
           this.allowTicket = 0
         })
       })
