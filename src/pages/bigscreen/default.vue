@@ -1,6 +1,6 @@
 <template>
 <div :class="$style.bigScreen" :style="'background-position: center; background-image: url(' + require('./big_bg.jpg') + ');'">
-  <div :class="$style['logo-wrapper']">
+  <div :class="$style['logo-wrapper']" style="opacity: 0">
     <img style="height: 100%;" :src="require('../../assets/logo.png')" alt="">
   </div>
   <div :class="$style['text-wrapper']">

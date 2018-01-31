@@ -3,9 +3,9 @@
     <div :class="$style['logo-wrapper']">
       <img style="height: 100%;" :src="require('../../assets/logo.png')" alt="">
     </div>
-    <p style="color: white; margin-top:72px; font-size:31px">安吉物流2018新春团拜会</p>
-    <p style='padding: 52px 0 42px; 0'><img src='./subitem3_1.png'/></p>
-    <div style="padding: 0 100px;">
+    <p style="color: white; margin-top:24px; font-size:31px">安吉物流2018新春团拜会</p>
+    <p style='padding: 12px 0;'><img src='./subitem3_1.png'/></p>
+    <div style="padding: 0 32px;">
       <div :class="$style['ticket-block']" v-for='item,index in itemDatas' :style='bgcolor(index)'>
         <img data-type='first-img' :src="require('./subitem3_2.png')" v-if='index == 0'>
         <img data-type='num-img' :src="require(`./num${index + 1}.png`)" alt="">
@@ -95,7 +95,7 @@ export default {
 
 <style lang='less' module>
 .bigScreen {
-  padding: 64px 0;
+  padding: 24px 0;
   height: 100%;
   background-size: cover;
   background-repeat: no-repeat;
@@ -115,7 +115,7 @@ export default {
   position: relative;
   border-radius: 8px;
   color: white;
-  padding: 18px 32px;
+  padding: 4px 32px;
   text-align: left;
   margin-bottom: 14px;
   padding-left: 100px;

@@ -3,9 +3,9 @@
     <div :class="$style['logo-wrapper']">
       <img style="height: 100%;" :src="require('../../assets/logo.png')" alt="">
     </div>
-    <p style="color: white; margin-top:72px; font-size:31px">安吉物流2018新春团拜会</p>
-    <p style='padding: 52px 0 42px; 0'><img src='./subitem2_1.png'/></p>
-    <div style="padding: 0 100px;" v-if='itemDatas.length > 0'>
+    <p style="color: white; margin-top:24px; font-size:31px">安吉物流2018新春团拜会</p>
+    <p style='padding: 12px 0'><img src='./subitem2_1.png'/></p>
+    <div style="padding: 0 32px;" v-if='itemDatas.length > 0'>
       <div :class="$style['ticket-block']">
         <p style="color: #dcbe4a; font-size: 26px;">{{itemDatas[0].teamName}}</p>
         <div :class="$style['ticket-item']">
@@ -163,7 +163,7 @@ export default {
 
 <style lang='less' module>
 .bigScreen {
-  padding: 64px 0;
+  padding: 24px 0;
   height: 100%;
   background-size: cover;
   background-repeat: no-repeat;
@@ -184,14 +184,14 @@ export default {
   background-color: rgba(115,110,41,0.2);
   border-radius: 8px;
   color: white;
-  padding: 24px 32px;
+  padding: 6px 32px;
   text-align: left;
   margin-bottom: 14px;
 }
 .ticket-item {
   position: relative;
   padding-right: 186px;
-  margin-top: 28px;
+  margin-top: 14px;
 }
 
 .progressWrapper {

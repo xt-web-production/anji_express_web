@@ -1,5 +1,5 @@
 <template>
-<div id="big-screen-wrapper" style=" height: 100vh;width: 100vw; overflow: hidden">
+<div id="big-screen-wrapper" style="height:1152px; width:640px; overflow: hidden">
   <router-view/>
 </div>
 </template>

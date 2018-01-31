@@ -1,5 +1,5 @@
 <template lang="html">
-  <div :class='$style.bigScreen' :style="'background-position: center; background-image: url(' + require('./subitem1_bg.jpg') + ');'">
+  <div :class='$style.bigScreen' :style="'background-size: contain;background-position: center; background-image: url(' + require('./subitem1_bg.jpg') + ');'">
 
   </div>
 </template>
@@ -11,8 +11,8 @@ export default {
 
 <style lang='less' module>
 .bigScreen {
+  width: 100%;
   height: 100%;
-  background-size: cover;
   background-repeat: no-repeat;
   position: relative;
   background: rgba(1, 0, 0, 0.16);
