@@ -10,7 +10,7 @@
         <img data-type='first-img' :src="require('./subitem3_2.png')" v-if='index == 0'>
         <img data-type='num-img' :src="require(`./num${index + 1}.png`)" alt="">
         <p :class="$style['ticket-block-title']">{{item.teamName}} <span style="color: #dcbe4a; margin-left:12px">{{item.name}}</span><span :class="$style.ticketVal">
-          {{item.num}}<span style="margin-left: 12px">点</span>
+          {{item.num}}<span style="margin-left: 12px">分</span>
         </span></p>
         <div :class="$style['ticket-item']">
           <div :class="$style.progressWrapper">
@@ -40,24 +40,24 @@ export default {
     return {
       itemDatas: [],
       itemNames: {
-        '1' : '小品《西天取经》',
-        '2' : '串烧表演《锦绣中华》',
-        '3' : '舞蹈《绿荫风采》',
-        '4' : '相声《津味安信》',
-        '5' : '小品《有你很精彩》',
-        '6' : '歌曲《广西·我美丽的家》',
-        '7' : '舞蹈《舞动未来》',
-        '8' : '小品《将广告进行到底》'
+        '1' : '星星点灯',
+        '2' : '有你更精彩',
+        '3' : '锦绣中华',
+        '4' : '津味安信',
+        '5' : '大话安吉之海陆荣耀',
+        '6' : '广西 我美丽的家',
+        '7' : '将广告进行到底',
+        '8' : '舞动未来'
       },
       teamNames: {
-        '1' : '战队1',
-        '2' : '战队1',
-        '3' : '战队2',
-        '4' : '战队2',
-        '5' : '战队3',
-        '6' : '战队3',
-        '7' : '战队4',
-        '8' : '战队4'
+        '1' : '忻际穿越战队',
+        '2' : '王者荣耀战队',
+        '3' : '国家宝藏战队',
+        '4' : '忻际穿越战队',
+        '5' : '国家宝藏战队',
+        '6' : '王者荣耀战队',
+        '7' : '沈采飞扬战队',
+        '8' : '沈采飞扬战队'
       }
     }
   },

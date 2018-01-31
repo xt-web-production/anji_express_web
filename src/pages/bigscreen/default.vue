@@ -70,16 +70,6 @@ export default {
   name: 'bigscreen',
   data() {
     return {
-      itemNames: {
-        1 : '小品《西天取经》',
-        2 : '串烧表演《锦绣中华》',
-        3 : '舞蹈《绿荫风采》',
-        4 : '相声《津味安信》',
-        5 : '小品《有你很精彩》',
-        6 : '歌曲《广西·我美丽的家》',
-        7 : '舞蹈《舞动未来》',
-        8 : '小品《将广告进行到底》'
-      },
       currentGiftItem: null,
       giftItems: [], // 获取礼物列表
       enterItems: [], //用户登录列表
@@ -155,6 +145,11 @@ export default {
       if (val.length) {
           !this.setInterGift && this.initIntervalGift()
       } else {
+        if(val.length < 1) {
+          setTimeout(()=>{
+            this.currentGiftItem = null
+          }, 2000)
+        }
         if (this.setInterGift) {
           clearInterval(this.setInterGift)
           this.setInterGift = null

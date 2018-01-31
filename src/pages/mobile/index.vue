@@ -40,8 +40,8 @@ export default {
 
       const params = {
         code: getParam(window.location.href, 'code'),
-        appid: 'wxbc8a3b506536d138', //星坤 wxbc8a3b506536d138 // 测试 wx4dcaf4dca875e624
-        secret: '9921201d63a01a6821e5fbb89106f33f', // 星坤 9921201d63a01a6821e5fbb89106f33f //测试 07f5aa7ed3a81b824eeb9ad303a277a4
+        appid: 'wxf223a769adb934e6', //星坤 wxbc8a3b506536d138 // 罗轩 wxf223a769adb934e6
+        secret: 'cad140eba92f29ee5fccf3681a88360b', // 星坤 9921201d63a01a6821e5fbb89106f33f //罗轩 cad140eba92f29ee5fccf3681a88360b
         grant_type: 'authorization_code'
       }
       axios.get(`${this.$wcApi}/sns/oauth2/access_token`, {
