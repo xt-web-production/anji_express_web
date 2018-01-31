@@ -219,7 +219,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='less' module>
 .bigScreen {
-  padding: 64px 0;
+  padding: 24px 0;
   height: 100%;
   background-size: cover;
   background-repeat: no-repeat;
@@ -236,8 +236,8 @@ export default {
 .text-wrapper {
   position: relative;
   height: 574px;
-  margin-top: 110px;
-  padding-top: 78px;
+  margin-top: 33px;
+  padding-top: 24px;
 }
 .img-box {
   position: absolute;
@@ -246,8 +246,8 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  width: 574px;
-  height: 574px;
+  width: 436px;
+  height: 436px;
   margin: auto;
   border-radius: 50%;
   overflow: hidden;
